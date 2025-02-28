@@ -1,5 +1,9 @@
-import author from './author';
-import post from './post';
-import project from './project';
+import post from './post'
+import author from './author'
+import image from './image'
 
-export const schemaTypes = [post, author, project]; 
+export const schemaTypes = [
+    post,
+    author,
+    image,
+] 
