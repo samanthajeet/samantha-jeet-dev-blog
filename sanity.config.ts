@@ -8,7 +8,7 @@ export default defineConfig({
     title: 'Your Project Name',
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
-    basePath: '/admin/studio',
+    studioHost: 'samanthajeet',
     plugins: [structureTool(), visionTool()],
     schema: {
         types: schemaTypes as SchemaTypeDefinition[],
