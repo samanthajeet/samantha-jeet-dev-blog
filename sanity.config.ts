@@ -1,16 +1,16 @@
-import { defineConfig } from 'sanity';
-import { deskTool } from 'sanity/desk';
+import { defineConfig, SchemaTypeDefinition } from 'sanity';
+import { structureTool } from 'sanity/structure';
 import { visionTool } from '@sanity/vision';
-import { schemaTypes } from './sanity/schemas';
+import { schemaTypes } from './sanity/schemas/index';
 
 export default defineConfig({
     name: 'default',
-    title: 'Personal Website',
+    title: 'Your Project Name',
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
     basePath: '/admin/studio',
-    plugins: [deskTool(), visionTool()],
+    plugins: [structureTool(), visionTool()],
     schema: {
-        types: schemaTypes,
+        types: schemaTypes as SchemaTypeDefinition[],
     },
 }); 
