@@ -2,19 +2,7 @@ import { client } from '../../../lib/sanity.client';
 import Link from 'next/link';
 import Image from 'next/image';
 import { urlForImage } from '../../../lib/sanity.image';
-
-interface Post {
-    _id: string;
-    title: string;
-    slug: { current: string };
-    mainImage: any;
-    publishedAt: string;
-    excerpt: string;
-    author: {
-        name: string;
-        image: any;
-    };
-}
+import { Post } from '@/types';
 
 async function getPosts() {
     const posts = await client.fetch(`
@@ -42,7 +30,7 @@ function formatDate(date: string) {
 }
 
 export default async function Blog() {
-    const posts = await getPosts();
+    const posts: Post[] = await getPosts();
 
     return (
         <div className="py-12">

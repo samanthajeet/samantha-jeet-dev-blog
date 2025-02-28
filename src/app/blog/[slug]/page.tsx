@@ -1,25 +1,17 @@
+import { SanityImage } from '@/types';
 import { client } from '../../../../lib/sanity.client';
-import { Metadata } from 'next';
 import BlogContent from '@/components/BlogContent';
-
+import { PortableTextBlock } from '@portabletext/react';
 interface Post {
     title: string;
-    mainImage: any;
-    body: any[];
+    mainImage: SanityImage;
+    body: PortableTextBlock[];
     excerpt?: string;
     author?: {
         name: string;
-        image: any;
+        image: SanityImage;
     };
     publishedAt: string;
-}
-
-function formatDate(date: string) {
-    return new Date(date).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
 }
 
 async function getPost(slug: string) {
@@ -39,10 +31,8 @@ async function getPost(slug: string) {
     return post;
 }
 
-export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-    const params = await props.params;
-    const slug = await params?.slug;
-    const post = await getPost(slug);
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+    const post: Post | null = await getPost(params.slug);
 
     return {
         title: post?.title || 'Blog Post',
@@ -61,10 +51,8 @@ export async function generateStaticParams() {
     }));
 }
 
-export default async function BlogPost(props: { params: Promise<{ slug: string }> }) {
-    const params = await props.params;
-    const slug = await params.slug;
-    const post = await getPost(slug);
+export default async function BlogPost({ params }: { params: { slug: string } }) {
+    const post: Post | null = await getPost(params.slug);
 
     if (!post) {
         return <div>Post not found</div>;

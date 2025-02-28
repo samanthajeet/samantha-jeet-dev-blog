@@ -1,6 +1,7 @@
 import { Rule } from '@sanity/types';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
-export default {
+const post = {
     name: 'post',
     title: 'Post',
     type: 'document',
@@ -130,9 +131,11 @@ export default {
             author: 'author.name',
             media: 'mainImage',
         },
-        prepare(selection: { title: string; author: string; media: any }) {
+        prepare(selection: { title: string; author: string; media: SanityImageSource }) {
             const { author } = selection;
             return { ...selection, subtitle: author && `by ${author}` };
         },
     },
-}; 
+};
+
+export default post;

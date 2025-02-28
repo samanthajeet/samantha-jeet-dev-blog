@@ -1,4 +1,6 @@
-export default {
+
+
+const project = {
     name: 'project',
     title: 'Project',
     type: 'document',
@@ -20,7 +22,7 @@ export default {
         {
             name: 'image',
             title: 'Image',
-            type: 'image',
+            type: 'customImage',
             options: {
                 hotspot: true,
             },
@@ -47,4 +49,6 @@ export default {
             type: 'url',
         },
     ],
-}; 
+};
+
+export default project;

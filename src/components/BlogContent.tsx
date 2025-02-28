@@ -1,20 +1,20 @@
 'use client'
 
-import { PortableText } from '@portabletext/react'
+import { PortableText, PortableTextMarkComponentProps } from '@portabletext/react'
 import Image from 'next/image'
 import { urlForImage } from '../../lib/sanity.image'
-import { portableTextComponents } from './PortableTextComponents'
+import { Post, SanityImage } from '@/types'
+import Link from 'next/link'
 
 interface BlogContentProps {
-    content: any[]
+    content: Post['body']
     title: string
-    mainImage?: any
+    mainImage?: SanityImage
     author?: {
         name: string
-        image?: any
+        image?: SanityImage
     }
     publishedAt: string
-
 }
 
 function formatDate(date: string) {
@@ -68,7 +68,39 @@ export default function BlogContent({ content, title, mainImage, author, publish
             <div className="prose max-w-none">
                 <PortableText
                     value={content}
-                    components={portableTextComponents}
+                    components={{
+                        types: {
+                            image: ({ value }: { value: SanityImage }) => {
+                                const imageUrl = urlForImage(value)?.url()
+                                return imageUrl ? (
+                                    <div className="relative w-full h-[400px] my-8">
+                                        <Image
+                                            src={imageUrl}
+                                            alt={value.alt || ''}
+                                            fill
+                                            className="object-cover rounded-lg"
+                                        />
+                                    </div>
+                                ) : null
+                            }
+                        },
+                        marks: {
+                            link: ({ children, value }: PortableTextMarkComponentProps<{ _type: string; href: string }>) => {
+                                return value?.href ? (
+                                    <a href={value.href} target="_blank" rel="noopener noreferrer">
+                                        {children}
+                                    </a>
+                                ) : <>{children}</>
+                            },
+                            internalLink: ({ children, value }: PortableTextMarkComponentProps<{ _type: string; reference: { slug: { current: string } } }>) => {
+                                return value?.reference?.slug?.current ? (
+                                    <Link href={`/blog/${value.reference.slug.current}`}>
+                                        {children}
+                                    </Link>
+                                ) : <>{children}</>
+                            }
+                        }
+                    }}
                 />
             </div>
         </article>

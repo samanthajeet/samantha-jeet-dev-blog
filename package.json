@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint . --ignore-pattern \".next/**/*\" --ignore-pattern \"static/**/*\"",
+    "lint:fix": "eslint . --ignore-pattern \".next/**/*\" --ignore-pattern \"static/**/*\" --fix",
+    "lint:strict": "eslint . --max-warnings=0"
   },
   "dependencies": {
     "@portabletext/react": "^3.2.1",
@@ -14,7 +16,6 @@
     "@sanity/icons": "^3.7.0",
     "@sanity/image-url": "^1.1.0",
     "@sanity/vision": "^3.77.2",
-    "@tailwindcss/typography": "^0.5.16",
     "next": "15.2.0",
     "next-sanity": "^9.8.60",
     "react": "^19.0.0",
@@ -25,6 +26,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

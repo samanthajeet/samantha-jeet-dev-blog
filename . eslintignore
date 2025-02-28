@@ -1,0 +1,11 @@
+# Next.js build output
+.next/**
+.next
+**/.next/**
+.next/static/**/*
+.next/static/*
+
+# Other directories
+node_modules/**
+static/**
+public/**

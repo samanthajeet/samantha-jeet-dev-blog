@@ -1,4 +1,6 @@
-export default {
+import { Rule } from '@sanity/types';
+
+const customImage = {
     name: 'customImage',
     title: 'Image',
     type: 'image',
@@ -10,7 +12,7 @@ export default {
             name: 'alt',
             title: 'Alternative text',
             type: 'string',
-            validation: (Rule: { required: () => any; }) => Rule.required(),
+            validation: (Rule: { required: () => Rule }) => Rule.required(),
         },
         {
             name: 'caption',
@@ -18,4 +20,6 @@ export default {
             type: 'string',
         }
     ]
-} 
+}
+
+export default customImage;
