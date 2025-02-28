@@ -1,35 +1,8 @@
-import { SanityImage } from '@/types';
-import { client } from '../../../../lib/sanity.client';
+import { client, getAuthor } from '../../../lib/sanity.client';
 import BlogContent from '@/components/BlogContent';
-import { PortableTextBlock } from '@portabletext/react';
-interface Post {
-    title: string;
-    mainImage: SanityImage;
-    body: PortableTextBlock[];
-    excerpt?: string;
-    author?: {
-        name: string;
-        image: SanityImage;
-    };
-    publishedAt: string;
-}
+import { getPost } from '../../../lib/sanity.client';
+import { Author, Post } from '@/types';
 
-async function getPost(slug: string) {
-    const post = await client.fetch(`
-    *[_type == "post" && slug.current == $slug][0] {
-      title,
-      mainImage,
-      body,
-      excerpt,
-      author->{
-        name,
-        image
-      },
-      publishedAt
-    }
-  `, { slug });
-    return post;
-}
 
 export async function generateMetadata(props: { params: Promise<{ slug: string }> }) {
     const params = await props.params;
@@ -54,7 +27,8 @@ export async function generateStaticParams() {
 
 export default async function BlogPost(props: { params: Promise<{ slug: string }> }) {
     const params = await props.params;
-    const post: Post | null = await getPost(params.slug);
+    const post: Post = await getPost(params.slug);
+    const author: Author = await getAuthor(post.author.name);
 
     if (!post) {
         return <div>Post not found</div>;
@@ -65,8 +39,8 @@ export default async function BlogPost(props: { params: Promise<{ slug: string }
             content={post.body}
             title={post.title}
             mainImage={post.mainImage}
-            author={post.author}
+            author={author}
             publishedAt={post.publishedAt}
         />
     );
-} 
+}

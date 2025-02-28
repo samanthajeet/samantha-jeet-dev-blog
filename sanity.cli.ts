@@ -3,7 +3,7 @@
 * Go to https://www.sanity.io/docs/cli to learn more.
 **/
 import { defineCliConfig } from 'sanity/cli'
-import { dataset, projectId } from './lib/sanity.client';
+import { dataset, projectId } from './src/lib/sanity.client';
 
 
 

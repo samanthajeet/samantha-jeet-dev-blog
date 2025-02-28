@@ -19,8 +19,8 @@ const permanentMarker = Permanent_Marker({
 })
 
 export const metadata: Metadata = {
-  title: "Your Name - Personal Website",
-  description: "Personal website and blog built with Next.js, TypeScript, and Sanity.io",
+  title: "What are you looking at?",
+  description: "A little part of the internet that I call home.",
 };
 
 export default function RootLayout({

@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { urlForImage } from '../../lib/sanity.image'
+import { urlForImage } from '../lib/sanity.image'
 import { SanityImage } from '@/types'
 
 

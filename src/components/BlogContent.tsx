@@ -1,21 +1,10 @@
-'use client'
-
 import { PortableText, PortableTextMarkComponentProps } from '@portabletext/react'
 import Image from 'next/image'
-import { urlForImage } from '../../lib/sanity.image'
-import { Post, SanityImage } from '@/types'
+import { urlForImage } from '../lib/sanity.image'
+import { Post, SanityImage, Author } from '@/types'
 import Link from 'next/link'
+import AuthorCard from '@/components/AuthorCard'
 
-interface BlogContentProps {
-    content: Post['body']
-    title: string
-    mainImage?: SanityImage
-    author?: {
-        name: string
-        image?: SanityImage
-    }
-    publishedAt: string
-}
 
 function formatDate(date: string) {
     return new Date(date).toLocaleDateString('en-US', {
@@ -25,11 +14,19 @@ function formatDate(date: string) {
     })
 }
 
-export default function BlogContent({ content, title, mainImage, author, publishedAt }: BlogContentProps) {
+
+export interface BlogContentProps {
+    content: Post['body']
+    title: string
+    mainImage?: SanityImage
+    author: Author
+    publishedAt: string
+}
+
+export default async function BlogContent({ content, title, mainImage, author, publishedAt }: BlogContentProps) {
     const authorImageUrl = author?.image ? urlForImage(author.image)?.url() : null
     const mainImageUrl = mainImage ? urlForImage(mainImage)?.url() : null
     const formattedDate = formatDate(publishedAt)
-
     return (
         <article className="max-w-3xl mx-auto px-4 py-12">
             <h1 className="text-5xl font-bold mb-4 font-permanent-marker">{title}</h1>
@@ -40,7 +37,7 @@ export default function BlogContent({ content, title, mainImage, author, publish
                             <div className="relative h-10 w-10 rounded-full overflow-hidden mr-4">
                                 <Image
                                     src={authorImageUrl}
-                                    alt={author.name}
+                                    alt={author.name || ''}
                                     fill
                                     className="object-cover"
                                 />
@@ -103,6 +100,9 @@ export default function BlogContent({ content, title, mainImage, author, publish
                     }}
                 />
             </div>
+            {/* {author && (
+                <AuthorCard name={author.name} image={author.image} bio={author.bio || ''} />
+            )} */}
         </article>
     )
 } 

@@ -1,11 +1,14 @@
-'use client'
+import createImageUrlBuilder from '@sanity/image-url';
+import { dataset, projectId } from './sanity.client';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
+const imageBuilder = createImageUrlBuilder({
+    projectId: projectId || '',
+    dataset: dataset || '',
+});
 
-import { client } from '@/sanity/lib/client'
-import { SanityImage } from '@/types'
-import imageUrlBuilder from '@sanity/image-url'
-
-const builder = imageUrlBuilder(client)
-
-export function urlForImage(source: SanityImage) {
-    return builder.image(source)
-} 
+export const urlForImage = (source: SanityImageSource) => {
+    if (!source) {
+        return undefined;
+    }
+    return imageBuilder.image(source);
+}; 

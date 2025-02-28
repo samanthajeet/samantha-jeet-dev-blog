@@ -10,6 +10,19 @@ export interface SanityImage {
     caption?: string
 }
 
+export interface Category {
+    color: string
+    title: string
+    value: string
+    slug: {
+        current: string
+    }
+}
+export interface Author {
+    name: string
+    image?: SanityImage | undefined
+    bio?: string | undefined
+}
 export interface Post {
     _id: string
     title: string
@@ -20,8 +33,6 @@ export interface Post {
     excerpt?: string
     body: PortableTextBlock[]
     publishedAt: string
-    author?: {
-        name: string
-        image?: SanityImage
-    }
-} 
+    categories: Category[]
+    author: Author
+}

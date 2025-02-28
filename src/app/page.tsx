@@ -8,9 +8,26 @@ export default function Home() {
           <h1 className="text-4xl font-bold tracking-tight text-dark sm:text-6xl">
             ✌🏽aloha, I&apos;m sam jeet <span className="text-sm align-text-center font-normal">she/her</span>
           </h1>
-          <p className="mt-6 text-lg leading-8 text-gray-600">
-            Slinging code by day. Internet gremlin by night. Former full-time stay at home daughter. Very gay.
-          </p>
+          <div className="text-sm mt-2 leading-8 text-dark" >
+            <p>
+              👩🏽‍💻 Crafting React & Rails magic by day.
+            </p>
+            <p>
+              🌙 Internet gremlin by night.
+            </p>
+            <p>
+              🌟 Championing diversity in tech with purpose and humor.
+            </p>
+            <p>
+              ✈️ Collecting travel stories worth blogging about.
+            </p>
+            <p>
+              🏠 Former full-time stay at home daughter.
+            </p>
+            <p>
+              🌈 Very gay, very intentional.
+            </p>
+          </div>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <Link
               href="/blog"
