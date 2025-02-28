@@ -9,4 +9,18 @@ export const client = createClient({
     dataset,
     apiVersion,
     useCdn: false,
-}); 
+});
+
+export async function getPosts() {
+    return client.fetch(`
+      *[_type == "post"] | order(publishedAt desc) {
+        _id,
+        title,
+        slug,
+        publishedAt,
+        excerpt,
+        "author": author->name,
+        mainImage
+      }
+    `)
+}

@@ -5,9 +5,10 @@ import { schemaTypes } from './sanity/schemas/index';
 
 export default defineConfig({
     name: 'default',
-    title: 'Your Project Name',
-    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+    title: 'Samantha Jeet',
+    projectId: process.env.SANITY_STUDIO_PROJECT_ID!,
+    dataset: process.env.SANITY_STUDIO_DATASET!,
+    basePath: '/',
     studioHost: 'samanthajeet',
     plugins: [structureTool(), visionTool()],
     schema: {
