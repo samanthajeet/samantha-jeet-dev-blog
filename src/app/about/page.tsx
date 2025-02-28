@@ -1,0 +1,55 @@
+import Image from 'next/image';
+
+export default function AboutPage() {
+    return (
+        <div className="flex flex-col md:flex-row items-center md:items-start gap-8 max-w-7xl mx-auto px-6 py-12">
+            <div className="w-full md:w-1/3 flex flex-col gap-4">
+                <div className="relative aspect-square rounded-lg overflow-hidden">
+                    <Image
+                        src="/images/Sam-Jeet-scaled.jpg"
+                        alt="Profile photo"
+                        width={800}
+                        height={600}
+                        className="rounded-lg"
+                    />
+                </div>
+                <div className="relative aspect-square rounded-lg overflow-hidden">
+                    <Image
+                        src="/images/sam-boise.jpg"
+                        alt="Profile photo"
+                        width={800}
+                        height={600}
+                        className="rounded-lg"
+                    />
+                </div>
+            </div>
+            <div className="w-full md:w-2/3 space-y-6">
+                <h1 className="text-4xl font-bold text-dark font-permanent-marker">About Me</h1>
+                <p className="text-dark">
+                    Samantha has always dreamed of speaking about herself in the third person and is thankful for this opportunity.
+                </p>
+                <p className="text-dark">
+                    Miss Jeet, as she's occasionally called, is a passionate Full-Stack Software Engineer with 5 years of experience crafting innovative solutions using React, JavaScript, TypeScript, and Ruby on Rails. Born with the spirit of Aloha, Sam was raised primarily on islands in The Pacific like Hawai'i, the Philippines, and Japan. Proof of this is seen in her wide feet, year-round sandal tan, and immense love for Spam and rice.
+                </p>
+                <p className="text-dark">
+                    Before becoming a developer, Samantha was a GIS Specialist working in the transit management and design industry. Though she loved geography and those she worked with, she knew it wouldn't fulfill her much longer. This realization brought her back to coding, which she first discovered in middle school when she would edit her MySpace page and make GeoCities fan pages for Charmed and Star Trek Voyager.
+                </p>
+                <p className="text-dark">
+                    Since moving to Salt Lake City in 2019 for her first developer role, Sam has had the great joy of working for cool organizations like Pluralsight and SixFifty. She's had the opportunity to learn from and work alongside some of the smartest and grooviest people in the business, while championing diversity and inclusion in tech.
+                </p>
+                <p className="text-dark">
+                    A natural problem solver, Samantha thrives in collaborative environments, bringing a blend of technical expertise and empathetic communication to every project. She's constantly curious and always learning, with a knack for translating complex problems into elegant solutions.
+                </p>
+                <p className="text-dark">
+                    Outside of work, Miss Jeet enjoys spending time with her partner and family, analog photography, binge-watching Bob's Burgers, calling her mom 3 times a day, renovating her house she promised her partner would only take 5 months to do, traveling, learning the new slang all the kids are using these days, and making lists.
+                </p>
+                <p className="text-dark">
+                    Samantha is passionate about giving back to the community through tech education initiatives, including her role as a Technical Trainer for Tech-Moms. Her contributions to the Utah tech scene haven't gone unnoticed, with nominations for the Women Tech Award and YWCA Outstanding Achievement Award.
+                </p>
+                <p className="text-dark">
+                    Miss Jeet holds a B.Sci in Health Care Administration and an M.Sci in Geographic Information Sciences. She promised her mom she would mention that.
+                </p>
+            </div>
+        </div>
+    )
+}

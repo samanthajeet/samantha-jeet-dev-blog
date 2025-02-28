@@ -5,8 +5,8 @@ export default function Home() {
     <div className="relative isolate">
       <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            Welcome to My Personal Website
+          <h1 className="text-4xl font-bold tracking-tight text-dark sm:text-6xl">
+            ✌🏽aloha, I'm sam jeet <span className="text-sm align-text-center font-normal">she/her</span>
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600">
             I'm a developer passionate about building amazing web experiences. Here you'll find my thoughts, projects, and more.

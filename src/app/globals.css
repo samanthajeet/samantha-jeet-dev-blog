@@ -2,17 +2,17 @@
 
 @theme {
   --font-sans: var(--font-noto-sans);
-  --font-mono: var(--font-zain);
+  --font-permanent-marker: var(--font-permanent-marker);
   --color-primary: #f6bd60;
   --color-secondary: #f28482;
   --color-tertiary: #84a59d;
-  --color-dark: #001d3d;
-  --color-light: #f7ede2;
+  --color-dark: #2f3e46;
+  --color-light: #f8f9fa;
 }
 
 :root {
-  --background: #f7ede2;
-  --foreground: #001d3d;
+  --background: #f8f9fa;
+  --foreground: #2f3e46;
 }
 
 /* @media (prefers-color-scheme: light) {

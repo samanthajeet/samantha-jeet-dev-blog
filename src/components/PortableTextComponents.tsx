@@ -53,15 +53,15 @@ export const portableTextComponents = {
         }
     },
     block: {
-        h1: ({ children }: any) => <h1 className="text-4xl font-bold mt-8 mb-4 text-brand-navy">{children}</h1>,
-        h2: ({ children }: any) => <h2 className="text-3xl font-bold mt-8 mb-4 text-brand-navy">{children}</h2>,
-        h3: ({ children }: any) => <h3 className="text-2xl font-bold mt-6 mb-3 text-brand-navy">{children}</h3>,
-        h4: ({ children }: any) => <h4 className="text-xl font-bold mt-4 mb-2 text-brand-navy">{children}</h4>,
-        p: ({ children }: any) => (
-            <p className="text-brand-navy/90 my-6 first:mt-0 last:mb-0 font-sans">
+        normal: ({ children }: any) => (
+            <p className="text-dark my-6 first:mt-0 last:mb-0 font-sans">
                 {children}
             </p>
         ),
+        h1: ({ children }: any) => <h1 className="text-4xl font-bold mt-8 mb-4 text-dark">{children}</h1>,
+        h2: ({ children }: any) => <h2 className="text-3xl font-bold mt-8 mb-4 text-dark">{children}</h2>,
+        h3: ({ children }: any) => <h3 className="text-2xl font-bold mt-6 mb-3 text-dark">{children}</h3>,
+        h4: ({ children }: any) => <h4 className="text-xl font-bold mt-4 mb-2 text-dark">{children}</h4>,
         blockquote: ({ children }: any) => (
             <blockquote className="border-l-4 border-brand-cream pl-4 my-4 italic text-brand-navy/80">
                 {children}

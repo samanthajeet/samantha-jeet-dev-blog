@@ -10,7 +10,7 @@ const config: Config = {
         extend: {
             fontFamily: {
                 sans: ['var(--font-noto-sans)'], // This will be your default font
-                zain: ['var(--font-zain)'],
+                'permanent-marker': ['var(--font-permanent-marker)']
             },
             colors: {
                 primary: 'var(--color-primary)',

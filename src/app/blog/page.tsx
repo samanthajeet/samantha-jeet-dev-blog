@@ -33,13 +33,20 @@ async function getPosts() {
   `);
     return posts;
 }
+function formatDate(date: string) {
+    return new Date(date).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    })
+}
 
 export default async function Blog() {
     const posts = await getPosts();
 
     return (
         <div className="py-12">
-            <h1 className="text-3xl font-bold text-center mb-12">Blog Posts</h1>
+            <h1 className="text-4xl font-bold text-center mb-12 font-permanent-marker">Blog Posts</h1>
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {posts.map((post: Post) => (
                     <article key={post._id} className="bg-white rounded-lg shadow-lg overflow-hidden">
@@ -57,13 +64,13 @@ export default async function Blog() {
                             <h2 className="text-xl font-semibold mb-2 text-brand-coral">
                                 <Link
                                     href={`/blog/${post.slug.current}`}
-                                    className="font-zain text-dark hover:bg-secondary hover:text-light transition-colors duration-200"
+                                    className="font-sans text-dark hover:bg-secondary hover:text-light transition-colors duration-200"
                                 >
                                     {post.title}
                                 </Link>
                             </h2>
                             <p className="text-gray-600 text-sm mb-4">
-                                {new Date(post.publishedAt).toLocaleDateString()}
+                                {formatDate(post.publishedAt)}
                             </p>
                             <p className="text-gray-500 mb-4 font-sans">{post.excerpt}</p>
                             {post.author && (

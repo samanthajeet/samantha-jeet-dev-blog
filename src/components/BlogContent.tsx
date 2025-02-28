@@ -14,6 +14,7 @@ interface BlogContentProps {
         image?: any
     }
     publishedAt: string
+
 }
 
 function formatDate(date: string) {
@@ -31,7 +32,7 @@ export default function BlogContent({ content, title, mainImage, author, publish
 
     return (
         <article className="max-w-3xl mx-auto px-4 py-12">
-            <h1 className="text-4xl font-bold mb-4">{title}</h1>
+            <h1 className="text-5xl font-bold mb-4 font-permanent-marker">{title}</h1>
             <div className="mb-8">
                 {author && (
                     <div className="flex items-center mb-4">

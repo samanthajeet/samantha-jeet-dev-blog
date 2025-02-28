@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Noto_Sans, Zain } from 'next/font/google'
+import { Noto_Sans, Permanent_Marker } from 'next/font/google'
 
 const notoSans = Noto_Sans({
   subsets: ['latin'],
@@ -10,13 +10,14 @@ const notoSans = Noto_Sans({
   variable: '--font-noto-sans',
 })
 
-const zain = Zain({
+const permanentMarker = Permanent_Marker({
   subsets: ['latin'],
-  weight: ['200', '300', '400', '700', '800', '900'],
-  style: ['normal', 'italic'],
+  weight: ['400'],
+  style: ['normal'],
   display: 'swap',
-  variable: '--font-zain',
+  variable: '--font-permanent-marker',
 })
+
 export const metadata: Metadata = {
   title: "Your Name - Personal Website",
   description: "Personal website and blog built with Next.js, TypeScript, and Sanity.io",
@@ -28,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${notoSans.variable} ${zain.variable}`}>
+    <html lang="en" className={`${notoSans.variable} ${permanentMarker.variable}`}>
       <body className="min-h-screen font-sans">
         {children}
       </body>
