@@ -35,4 +35,14 @@ export interface Post {
     publishedAt: string
     categories: Category[]
     author: Author
+    comments: Comment[]
+}
+
+export interface Comment {
+    _id: string
+    name: string
+    text: string
+    createdAt: string
+    post: Post
+    approved: boolean
 }

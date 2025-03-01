@@ -36,11 +36,13 @@ export default async function BlogPost(props: { params: Promise<{ slug: string }
 
     return (
         <BlogContent
+            postId={post._id}
             content={post.body}
             title={post.title}
             mainImage={post.mainImage}
             author={author}
             publishedAt={post.publishedAt}
+            comments={post.comments}
         />
     );
 }

@@ -1,8 +1,4 @@
-
-
 import { defineType } from 'sanity';
-
-
 
 const category = defineType({
     name: "category",
