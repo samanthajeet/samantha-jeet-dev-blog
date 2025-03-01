@@ -27,6 +27,7 @@ export default async function BlogContent({ content, title, mainImage, author, p
     const authorImageUrl = author?.image ? urlForImage(author.image)?.url() : null
     const mainImageUrl = mainImage ? urlForImage(mainImage)?.url() : null
     const formattedDate = formatDate(publishedAt)
+
     return (
         <article className="max-w-3xl mx-auto px-4 py-12">
             <h1 className="text-5xl font-bold mb-4 font-permanent-marker">{title}</h1>
@@ -100,9 +101,9 @@ export default async function BlogContent({ content, title, mainImage, author, p
                     }}
                 />
             </div>
-            {/* {author && (
-                <AuthorCard name={author.name} image={author.image} bio={author.bio || ''} />
-            )} */}
+            {author.name ? (
+                <AuthorCard name={author.name} image={author.image} bio={author.bio} />
+            ) : null}
         </article>
     )
 } 

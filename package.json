@@ -6,8 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --ignore-pattern \".next/**/*\" --ignore-pattern \"static/**/*\"",
-    "lint:fix": "eslint . --ignore-pattern \".next/**/*\" --ignore-pattern \"static/**/*\" --fix",
+    "lint": "eslint . --ignore-pattern \".next/**/*\" --ignore-pattern \"static/**/*\" --ignore-pattern \"dist/**/*\"",
+    "lint:fix": "eslint . --ignore-pattern \".next/**/*\" --ignore-pattern \"static/**/*\" --ignore-pattern \"dist/**/*\" --fix",
     "lint:strict": "eslint . --max-warnings=0"
   },
   "dependencies": {

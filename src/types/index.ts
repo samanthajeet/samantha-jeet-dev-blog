@@ -21,7 +21,7 @@ export interface Category {
 export interface Author {
     name: string
     image?: SanityImage | undefined
-    bio?: string | undefined
+    bio?: PortableTextBlock[] | undefined
 }
 export interface Post {
     _id: string

@@ -1,17 +1,19 @@
 import Image from 'next/image'
 import { urlForImage } from '../lib/sanity.image'
 import { SanityImage } from '@/types'
+import { PortableText } from '@portabletext/react'
+import { PortableTextBlock } from '@portabletext/types'
 
 interface AuthorProps {
     name: string
     image?: SanityImage
-    bio?: string
+    bio?: PortableTextBlock[]
 }
 
 export default function AuthorCard({ name, image, bio }: AuthorProps) {
     return (
-        <div className="mt-16 pt-8 border-t border-brand-navy/10">
-            <div className="flex items-start gap-6">
+        <div className="mt-4 pt-4 border-t border-dark">
+            <div className="flex items-center gap-6 bg-dark/5 p-4 rounded-lg" >
                 {image && (
                     <div className="relative h-24 w-24 rounded-full overflow-hidden flex-shrink-0">
                         <Image
@@ -23,13 +25,11 @@ export default function AuthorCard({ name, image, bio }: AuthorProps) {
                     </div>
                 )}
                 <div>
-                    <h3 className="text-xl font-semibold text-brand-navy mb-2">
-                        Written by {name}
+                    <h3 className="text-xl font-sans text-brand-navy mb-2">
+                        by <span className="font-permanent-marker">{name}</span>
                     </h3>
                     {bio && (
-                        <p className="text-brand-navy/80 leading-relaxed">
-                            {bio}
-                        </p>
+                        <PortableText value={bio} />
                     )}
                 </div>
             </div>

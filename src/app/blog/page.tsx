@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { urlForImage } from '../../lib/sanity.image';
 import { Post } from '@/types';
-import { getPosts, getCategories, getPostsByCategory } from '../../lib/sanity.client';
+import { getPosts } from '../../lib/sanity.client';
 
 
 function formatDate(date: string) {
