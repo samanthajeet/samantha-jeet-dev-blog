@@ -5,8 +5,13 @@ export default function Home() {
     <div className="relative isolate">
       <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-dark sm:text-6xl">
-            ✌🏽aloha, I&apos;m sam jeet <span className="text-sm align-text-center font-normal">she/her</span>
+          <h1 className="text-4xl font-bold text-center text-dark inline-block relative">
+            <span className="relative z-10">✌🏽aloha, I&apos;m <span className="font-permanent-marker text-5xl">sam jeet</span> <span className="text-sm font-normal">she/her</span></span>
+            <span
+              className={`absolute -inset-x-8 inset-y-0 block skew-y-1 -z-10 ${['bg-primary/20', 'bg-secondary/20', 'bg-tertiary/20', 'bg-retroBlue/20'][Math.floor(Math.random() * 4)]
+                }`}
+              aria-hidden="true"
+            ></span>
           </h1>
           <div className="text-sm mt-2 leading-8 text-dark" >
             <p>
