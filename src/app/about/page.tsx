@@ -1,19 +1,15 @@
+'use client'
+import { TimelineEntry } from '@/components/TimelineEntry';
 import Image from 'next/image';
+import { useState } from 'react';
+import { timelineData } from '@/data/timeline';
 
 export default function AboutPage() {
+    const [isCompact, setIsCompact] = useState(true)
     return (
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8 max-w-7xl mx-auto px-6 py-12">
             <div className="w-full md:w-1/3 flex flex-col gap-4">
-                <div className="relative aspect-square rounded-lg overflow-hidden">
-                    <Image
-                        src="/images/Sam-Jeet-scaled.jpg"
-                        alt="Profile photo"
-                        width={800}
-                        height={600}
-                        className="rounded-lg"
-                    />
-                </div>
-                <div className="relative aspect-square rounded-lg overflow-hidden">
+                <div className="relative h-[250px] rounded-lg overflow-hidden flex items-center justify-center">
                     <Image
                         src="/images/sam-boise.jpg"
                         alt="Profile photo"
@@ -22,6 +18,33 @@ export default function AboutPage() {
                         className="rounded-lg"
                     />
                 </div>
+                <div className="space-y-4">
+                    <div className="max-w-4xl mx-auto flex justify-end">
+                        <button
+                            onClick={() => setIsCompact(!isCompact)}
+                            className={`text-sm px-3 py-1.5 rounded-md transition-all duration-300 ${isCompact
+                                ? 'bg-secondary text-light hover:bg-secondary/90'
+                                : 'bg-dark text-light hover:bg-dark/90'
+                                }`}
+                        >
+                            {isCompact ? 'Show Details' : 'Hide Details'}
+                        </button>
+                    </div>
+                    <div className="border-r-2 border-secondary pr-4 text-right font-sans text-dark">
+                        {timelineData.map((item, index) => (
+                            <TimelineEntry
+                                key={`${item.title}-${index}`}
+                                title={item.title}
+                                company={item.company}
+                                dates={item.dates}
+                                description={item.description}
+                                isLifeEvent={item.isLifeEvent}
+                                isCompact={isCompact}
+                            />
+                        ))}
+                    </div>
+                </div>
+
             </div>
             <div className="w-full md:w-2/3 space-y-6">
                 <h1 className="text-4xl font-bold text-dark font-permanent-marker">About Me</h1>
