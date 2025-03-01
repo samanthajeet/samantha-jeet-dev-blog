@@ -3,12 +3,14 @@ import { createClient } from 'next-sanity';
 export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!;
 export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
 const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-03-13';
+const token = process.env.SANITY_API_WRITE_TOKEN;
 
 export const client = createClient({
   projectId,
   dataset,
   apiVersion,
   useCdn: false,
+  token,
 });
 
 export async function getPosts() {
@@ -34,6 +36,7 @@ export async function getPosts() {
 export async function getPost(slug: string) {
   const post = await client.fetch(`
   *[_type == "post" && slug.current == $slug][0] {
+    _id,
     title,
     mainImage,
     body,
@@ -43,7 +46,8 @@ export async function getPost(slug: string) {
       image,
       bio
     },
-    publishedAt
+    publishedAt,
+    comments[]->,
   }
 `, { slug });
   return post;
@@ -73,6 +77,16 @@ export async function getCategories() {
     }
   `);
   return categories;
+}
+
+export async function getCommentsForPost(postId: string) {
+  const comments = await client.fetch(`
+    *[_type == "comment" && post._ref == $postId] {
+      ...,
+      post->
+    }
+  `, { postId });
+  return comments;
 }
 
 export async function getPostsByCategory(slug: string) {

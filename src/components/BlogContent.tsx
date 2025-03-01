@@ -1,9 +1,11 @@
 import { PortableText, PortableTextMarkComponentProps } from '@portabletext/react'
 import Image from 'next/image'
 import { urlForImage } from '../lib/sanity.image'
-import { Post, SanityImage, Author } from '@/types'
+import { Post, SanityImage, Author, Comment } from '@/types'
 import Link from 'next/link'
 import AuthorCard from '@/components/AuthorCard'
+import Comments from '@/components/Comments'
+import CommentForm from '@/components/CommentForm'
 
 
 function formatDate(date: string) {
@@ -21,12 +23,15 @@ export interface BlogContentProps {
     mainImage?: SanityImage
     author: Author
     publishedAt: string
+    comments: Comment[]
+    postId: string
 }
 
-export default async function BlogContent({ content, title, mainImage, author, publishedAt }: BlogContentProps) {
+export default async function BlogContent({ content, title, mainImage, author, publishedAt, comments, postId }: BlogContentProps) {
     const authorImageUrl = author?.image ? urlForImage(author.image)?.url() : null
     const mainImageUrl = mainImage ? urlForImage(mainImage)?.url() : null
     const formattedDate = formatDate(publishedAt)
+
 
     return (
         <article className="max-w-3xl mx-auto px-4 py-12">
@@ -110,6 +115,18 @@ export default async function BlogContent({ content, title, mainImage, author, p
             {author.name ? (
                 <AuthorCard name={author.name} image={author.image} bio={author.bio} />
             ) : null}
+
+            {comments && comments.length > 0 ? (
+                <Comments comments={comments} />
+            ) : (
+                <div className="mt-16 pt-8 border-t border-brand-navy/10">
+                    <p className="text-brand-navy/60 text-center italic">
+                        No comments yet. Be the first to comment!
+                    </p>
+                </div>
+            )}
+
+            <CommentForm postId={postId} />
         </article>
     )
 } 

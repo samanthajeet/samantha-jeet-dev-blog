@@ -41,6 +41,12 @@ const post = {
             of: [{ type: "reference", to: { type: "category" } }]
         },
         {
+            name: 'comments',
+            title: 'Comments',
+            type: 'array',
+            of: [{ type: 'reference', to: { type: 'comment' } }],
+        },
+        {
             name: 'publishedAt',
             title: 'Published at',
             type: 'datetime',
