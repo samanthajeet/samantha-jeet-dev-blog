@@ -17,55 +17,73 @@ export default async function Blog() {
     const posts: Post[] = await getPosts();
 
     return (
-        <div className="py-12">
-            <h1 className="text-4xl font-bold text-center mb-12 font-permanent-marker">Blog Posts</h1>
+        <div className="py-12 px-4">
+            <div className="flex justify-center">
+                <h1 className="text-5xl font-bold text-center mb-12 font-permanent-marker text-dark inline-block relative">
+                    <span className="relative z-10">Blog Posts</span>
+                    <span
+                        className="absolute -inset-x-4 inset-y-0 block bg-secondary/20 -skew-y-3 -z-10"
+                        aria-hidden="true"
+                    ></span>
+                </h1>
+            </div>
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {posts.map((post: Post) => (
-                    <article key={post._id} className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col h-full">
+                    <article key={post._id} className="group bg-white rounded-lg shadow-lg overflow-hidden flex flex-col h-full transform hover:-translate-y-1 transition-all duration-300 border-2 border-dark/10">
                         {post.mainImage && (
                             <div className="relative aspect-square">
+                                <div className="absolute inset-0 bg-dark/5 group-hover:bg-transparent transition-colors duration-300 z-10"></div>
                                 <Image
                                     src={urlForImage(post.mainImage)?.url() || ''}
                                     alt={post.title}
                                     fill
-                                    className="object-cover"
+                                    className="object-cover filter saturate-[0.9] group-hover:saturate-100 transition-all duration-300"
                                 />
                             </div>
                         )}
                         {post.categories && post.categories.length > 0 && (
-                            <div className="flex flex-wrap gap-2 px-6 mt-3 mb-3">
+                            <div className="flex flex-wrap gap-2 px-6 mt-4 mb-3">
                                 {post.categories.map((cat) => (
                                     <span
                                         key={cat.slug.current}
-                                        className={`text-xs bg-brand-navy/5 rounded-full`} style={{ color: cat.color }}
+                                        className="text-[.7rem] px-2 py-1 border-1 uppercase"
+                                        style={{
+                                            color: cat.color,
+                                            borderColor: cat.color,
+                                            backgroundColor: `${cat.color}10`
+                                        }}
                                     >
-                                        {cat.title.toUpperCase()}
+                                        {cat.title}
                                     </span>
                                 ))}
                             </div>
                         )}
                         <div className="px-6 pb-4 flex flex-col flex-1">
                             <div className="flex-1">
-                                <h2 className="text-xl font-semibold mb-2 text-brand-coral">
+                                <h2 className="text-[1.5rem] font-bold mb-2">
                                     <Link
                                         href={`/blog/${post.slug.current}`}
-                                        className="font-sans text-dark hover:border-b-2 hover:border-secondary"
+                                        className="font-sans text-dark relative z-10 inline-block"
                                     >
-                                        {post.title}
+                                        <span className="relative inline-block w-full">
+                                            {post.title}
+                                            <span
+                                                className="absolute -inset-x-2 inset-y-0 block bg-primary/20 -skew-y-3 -z-10 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 w-[calc(100%+1rem)]"
+                                                aria-hidden="true"
+                                            ></span>
+                                        </span>
                                     </Link>
                                 </h2>
-
-                                {/* <p className="text-gray-500 mb-4 font-sans">{post.excerpt}</p> */}
                             </div>
 
-                            <div className="mt-auto">
-                                <p className="text-gray-600 text-sm mb-4">
+                            <div className="mt-auto pt-4 border-dark/20">
+                                <p className="text-dark font-sans text-sm mb-4">
                                     {formatDate(post.publishedAt)}
                                 </p>
                                 {post.author && (
                                     <div className="flex items-center">
                                         {post.author.image && (
-                                            <div className="relative h-8 w-8 rounded-full overflow-hidden mr-3">
+                                            <div className="relative h-8 w-8 rounded-full overflow-hidden mr-3 border-2 border-dark">
                                                 <Image
                                                     src={urlForImage(post.author.image)?.url() || ''}
                                                     alt={post.author.name}
@@ -74,10 +92,9 @@ export default async function Blog() {
                                                 />
                                             </div>
                                         )}
-                                        <span className="text-sm text-gray-600">{post.author.name}</span>
+                                        <span className="text-sm text-dark font-medium">{post.author.name}</span>
                                     </div>
                                 )}
-
                             </div>
                         </div>
                     </article>

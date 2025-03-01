@@ -22,7 +22,7 @@ export default function AboutPage() {
                     <div className="max-w-4xl mx-auto flex justify-end">
                         <button
                             onClick={() => setIsCompact(!isCompact)}
-                            className={`text-sm px-3 py-1.5 rounded-md transition-all duration-300 ${isCompact
+                            className={`text-xs px-3 py-1.5 rounded-md transition-all duration-300 ${isCompact
                                 ? 'bg-secondary text-light hover:bg-secondary/90'
                                 : 'bg-dark text-light hover:bg-dark/90'
                                 }`}

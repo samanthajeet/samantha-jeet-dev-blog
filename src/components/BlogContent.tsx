@@ -30,7 +30,13 @@ export default async function BlogContent({ content, title, mainImage, author, p
 
     return (
         <article className="max-w-3xl mx-auto px-4 py-12">
-            <h1 className="text-5xl font-bold mb-4 font-permanent-marker">{title}</h1>
+            <h1 className="text-5xl font-bold text-center mb-12 font-permanent-marker text-black inline-block relative">
+                <span className="relative z-10">{title}</span>
+                <span
+                    className="absolute -inset-x-4 inset-y-0 block bg-secondary/20 -skew-y-3 -z-10"
+                    aria-hidden="true"
+                ></span>
+            </h1>
             <div className="mb-8">
                 {author && (
                     <div className="flex items-center mb-4">
