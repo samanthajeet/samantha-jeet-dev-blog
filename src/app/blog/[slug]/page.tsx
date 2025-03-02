@@ -1,4 +1,4 @@
-import { client, getAuthor } from '../../../lib/sanity.client';
+import { getAuthor, getPosts } from '../../../lib/sanity.client';
 import BlogContent from '@/components/BlogContent';
 import { getPost } from '../../../lib/sanity.client';
 import { Author, Post } from '@/types';
@@ -15,14 +15,14 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 }
 
 export async function generateStaticParams() {
-    const posts = await client.fetch(`
-    *[_type == "post"] {
-      slug
-    }
-  `);
-    return posts.map((post: { slug: { current: string } }) => ({
-        slug: post.slug.current,
-    }));
+    const posts = await getPosts()
+
+    // Add null check and filter out any posts without slugs
+    return posts
+        ?.filter((post: Post) => post?.slug?.current)
+        .map((post: Post) => ({
+            slug: post.slug.current,
+        })) || []
 }
 
 export default async function BlogPost(props: { params: Promise<{ slug: string }> }) {

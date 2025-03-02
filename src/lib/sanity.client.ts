@@ -15,21 +15,22 @@ export const client = createClient({
 
 export async function getPosts() {
   const posts = await client.fetch(`
-  *[_type == "post"] | order(publishedAt desc) {
-    _id,
-    title,
-    slug,
-    mainImage,
-    publishedAt,
-    excerpt,
-    categories[]->,
-    author->{
-      name,
-      image,
-      bio
+    *[_type == "post"] | order(publishedAt desc) {
+      _id,
+      title,
+      "slug": slug.current,
+      slug,
+      mainImage,
+      publishedAt,
+      excerpt,
+      categories[]->,
+      author->{
+        name,
+        image,
+        bio
+      }
     }
-  }
-`);
+  `);
   return posts;
 }
 
