@@ -41,26 +41,14 @@ export default async function Blog() {
                                 />
                             </div>
                         )}
-                        {post.categories && post.categories.length > 0 && (
-                            <div className="flex flex-wrap gap-2 px-6 mt-4 mb-3">
-                                {post.categories.map((cat) => (
-                                    <span
-                                        key={cat.slug.current}
-                                        className="text-[.7rem] px-2 py-1 border-1 uppercase"
-                                        style={{
-                                            color: cat.color,
-                                            borderColor: cat.color,
-                                            backgroundColor: `${cat.color}10`
-                                        }}
-                                    >
-                                        {cat.title}
-                                    </span>
-                                ))}
-                            </div>
-                        )}
+                        <div className="px-6 pt-4">
+                            <p className="text-dark font-sans text-sm mb-4">
+                                {formatDate(post.publishedAt)}
+                            </p>
+                        </div>
                         <div className="px-6 pb-4 flex flex-col flex-1">
                             <div className="flex-1">
-                                <h2 className="text-[1.5rem] font-bold mb-2">
+                                <h2 className="text-[1.25rem] font-bold mb-2">
                                     <Link
                                         href={`/blog/${post.slug.current}`}
                                         className="font-sans text-dark relative z-10 inline-block"
@@ -76,14 +64,11 @@ export default async function Blog() {
                                 </h2>
                             </div>
 
-                            <div className="mt-auto pt-4 border-dark/20">
-                                <p className="text-dark font-sans text-sm mb-4">
-                                    {formatDate(post.publishedAt)}
-                                </p>
+                            <div className="mt-auto pt-4 border-t border-dark/20">
                                 {post.author && (
-                                    <div className="flex items-center">
+                                    <div className="flex items-center mb-3">
                                         {post.author.image && (
-                                            <div className="relative h-8 w-8 rounded-full overflow-hidden mr-3 border-2 border-dark">
+                                            <div className="relative h-8 w-8 rounded-full overflow-hidden mr-3">
                                                 <Image
                                                     src={urlForImage(post.author.image)?.url() || ''}
                                                     alt={post.author.name}
@@ -93,6 +78,23 @@ export default async function Blog() {
                                             </div>
                                         )}
                                         <span className="text-sm text-dark font-medium">{post.author.name}</span>
+                                    </div>
+                                )}
+                                {post.categories && post.categories.length > 0 && (
+                                    <div className="flex flex-wrap gap-2">
+                                        {post.categories.map((cat) => (
+                                            <span
+                                                key={cat.slug.current}
+                                                className="text-[.7rem] px-2 py-1 border-1 uppercase"
+                                                style={{
+                                                    color: cat.color,
+                                                    borderColor: cat.color,
+                                                    backgroundColor: `${cat.color}10`
+                                                }}
+                                            >
+                                                {cat.title}
+                                            </span>
+                                        ))}
                                     </div>
                                 )}
                             </div>

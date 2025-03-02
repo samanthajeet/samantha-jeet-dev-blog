@@ -15,7 +15,7 @@ export const client = createClient({
 
 export async function getPosts() {
   const posts = await client.fetch(`
-    *[_type == "post"] | order(publishedAt desc) {
+    *[_type == "post" && defined(slug.current) && !(_id in path("drafts.**"))] | order(publishedAt desc) {
       _id,
       title,
       "slug": slug.current,
