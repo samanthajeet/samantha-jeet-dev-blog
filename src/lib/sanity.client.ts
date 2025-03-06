@@ -49,6 +49,9 @@ export async function getPost(slug: string) {
     },
     publishedAt,
     comments[]->,
+    categories[]->,
+    openGraph,
+    twitter
   }
 `, { slug });
   return post;

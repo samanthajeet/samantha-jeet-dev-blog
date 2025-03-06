@@ -2,16 +2,64 @@ import { getAuthor, getPosts } from '../../../lib/sanity.client';
 import BlogContent from '@/components/BlogContent';
 import { getPost } from '../../../lib/sanity.client';
 import { Author, Post } from '@/types';
+import { Metadata } from 'next'
+import { urlForImage } from '@/lib/sanity.image'
+import { notFound } from 'next/navigation';
 
+interface Props {
+    params: {
+        slug: string
+    }
+}
 
-export async function generateMetadata(props: { params: Promise<{ slug: string }> }) {
-    const params = await props.params;
-    const post: Post | null = await getPost(params.slug);
+export async function generateMetadata(
+    { params }: Props
+): Promise<Metadata> {
+    // Wait for the slug
+    const slug = await params.slug
+    // Then get the post
+    const post = await getPost(slug)
+
+    if (!post) {
+        return {
+            title: 'Not Found',
+            description: 'The page you are looking for does not exist.',
+        }
+    }
+
+    const ogImage = post.openGraph?.image
+        ? urlForImage(post.openGraph.image)?.url()
+        : post.mainImage
+            ? urlForImage(post.mainImage)?.url()
+            : null
 
     return {
-        title: post?.title || 'Blog Post',
-        description: post?.excerpt || 'Blog post on my personal website',
-    };
+        title: post.openGraph?.title || post.title,
+        description: post.openGraph?.description || post.metaDescription,
+        openGraph: {
+            title: post.openGraph?.title || post.title,
+            description: post.openGraph?.description || post.metaDescription,
+            type: post.openGraph?.type || 'article',
+            images: ogImage ? [
+                {
+                    url: ogImage,
+                    width: 1200,
+                    height: 630,
+                    alt: post.openGraph?.image?.alt || post.title,
+                }
+            ] : [],
+        },
+        twitter: {
+            card: post.twitter?.card || 'summary_large_image',
+            title: post.openGraph?.title || post.title,
+            description: post.openGraph?.description || post.metaDescription,
+            images: post.twitter?.image
+                ? [urlForImage(post.twitter.image)?.url() || '']
+                : ogImage
+                    ? [ogImage]
+                    : [],
+        },
+    }
 }
 
 export async function generateStaticParams() {
@@ -25,14 +73,15 @@ export async function generateStaticParams() {
         })) || []
 }
 
-export default async function BlogPost(props: { params: Promise<{ slug: string }> }) {
-    const params = await props.params;
-    const post: Post = await getPost(params.slug);
-    const author: Author = await getAuthor(post.author.name);
+export default async function BlogPost({ params }: Props) {
+    const slug = await params.slug
+    const post = await getPost(slug)
 
     if (!post) {
-        return <div>Post not found</div>;
+        notFound()
     }
+
+    const author: Author = await getAuthor(post.author.name);
 
     return (
         <BlogContent

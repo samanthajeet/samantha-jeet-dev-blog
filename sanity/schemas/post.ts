@@ -212,20 +212,94 @@ const post = {
             ]
         },
         {
-            name: 'ogTitle',
-            title: 'Social Title',
-            type: 'string',
+            name: 'openGraph',
+            title: 'Open Graph',
+            type: 'object',
             group: 'seo',
-            description: 'Title for social media sharing. Keep under 60 characters.',
-            validation: (rule: Rule) => rule.max(60),
+            description: 'These settings control how your post appears when shared on social networks',
+            fields: [
+                {
+                    name: 'title',
+                    title: 'Social Title',
+                    type: 'string',
+                    description: 'Defaults to post title if left empty',
+                    validation: (rule: Rule) => rule.max(60),
+                },
+                {
+                    name: 'description',
+                    title: 'Social Description',
+                    type: 'text',
+                    description: 'Defaults to meta description if left empty',
+                    validation: (rule: Rule) => rule.max(180),
+                },
+                {
+                    name: 'image',
+                    title: 'Social Image',
+                    type: 'image',
+                    description: 'Ideal size: 1200x630px',
+                    options: {
+                        hotspot: true,
+                    },
+                    fields: [
+                        {
+                            name: 'alt',
+                            type: 'string',
+                            title: 'Alternative text',
+                            validation: (rule: Rule) => rule.required(),
+                        }
+                    ]
+                },
+                {
+                    name: 'type',
+                    title: 'Content Type',
+                    type: 'string',
+                    options: {
+                        list: [
+                            { title: 'Article', value: 'article' },
+                            { title: 'Website', value: 'website' },
+                        ],
+                    },
+                    initialValue: 'article',
+                }
+            ]
         },
         {
-            name: 'ogDescription',
-            title: 'Social Description',
-            type: 'text',
+            name: 'twitter',
+            title: 'Twitter Card',
+            type: 'object',
             group: 'seo',
-            description: 'Description for social media sharing. Keep under 160 characters.',
-            validation: (rule: Rule) => rule.max(160),
+            description: 'Additional settings for Twitter sharing',
+            fields: [
+                {
+                    name: 'card',
+                    title: 'Card Type',
+                    type: 'string',
+                    options: {
+                        list: [
+                            { title: 'Summary with Large Image', value: 'summary_large_image' },
+                            { title: 'Summary', value: 'summary' },
+                        ],
+                    },
+                    initialValue: 'summary_large_image',
+                },
+                {
+                    name: 'image',
+                    title: 'Twitter Image',
+                    type: 'image',
+                    description: 'Optional: Use a different image for Twitter. If left empty, will use Open Graph image',
+                    options: {
+                        hotspot: true,
+                    },
+                    fields: [
+                        {
+                            name: 'alt',
+                            type: 'string',
+                            title: 'Alternative text',
+                            validation: (rule: Rule) => rule.required(),
+                        }
+                    ]
+                }
+            ]
         },
 
         // Metadata Group
@@ -261,7 +335,7 @@ const post = {
             type: 'text',
             group: 'metadata',
             description: 'Brief summary of the post. Used in blog listings and SEO.',
-            validation: (rule: Rule) => rule.max(200),
+            validation: (rule: Rule) => rule.max(210),
         },
         {
             name: 'readingTime',
