@@ -173,7 +173,7 @@ const post = {
             type: 'text',
             group: 'seo',
             description: 'Description for search engines. Keep between 150-160 characters for optimal display.',
-            validation: (rule: Rule) => rule.min(150).max(160),
+            validation: (rule: Rule) => rule.min(150).max(180),
         },
         {
             name: 'keywords',
