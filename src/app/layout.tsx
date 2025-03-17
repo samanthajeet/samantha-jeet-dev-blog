@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Noto_Sans, Permanent_Marker } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next';
 
 const notoSans = Noto_Sans({
   subsets: ['latin'],
@@ -32,6 +33,7 @@ export default function RootLayout({
     <html lang="en" className={`${notoSans.variable} ${permanentMarker.variable}`}>
       <body className="min-h-screen font-sans">
         {children}
+        <Analytics />
       </body>
     </html>
   );
