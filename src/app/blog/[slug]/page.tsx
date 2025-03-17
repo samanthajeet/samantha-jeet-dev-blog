@@ -7,14 +7,13 @@ import { urlForImage } from '@/lib/sanity.image'
 import { notFound } from 'next/navigation';
 
 interface Props {
-    params: {
+    params: Promise<{
         slug: string
-    }
+    }>
 }
 
-export async function generateMetadata(
-    { params }: Props
-): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+    const params = await props.params;
     const post = await getPost(params.slug)
 
     if (!post) {
@@ -25,7 +24,7 @@ export async function generateMetadata(
     }
 
     // Safe image URL resolution with error handling
-    const getImageUrl = (image: any): string | null => {
+    const getImageUrl = (image: { asset?: { _ref: string } }): string | null => {
         try {
             if (!image?.asset) {
                 return null
@@ -95,7 +94,8 @@ export async function generateStaticParams() {
         })) || []
 }
 
-export default async function BlogPost({ params }: Props) {
+export default async function BlogPost(props: Props) {
+    const params = await props.params;
     const post = await getPost(params.slug)
 
     if (!post) {
@@ -103,7 +103,7 @@ export default async function BlogPost({ params }: Props) {
     }
 
     // Safe image handling for the main content
-    const getImageUrl = (image: any): string | null => {
+    const getImageUrl = (image: { asset?: { _ref: string } }): string | null => {
         try {
             if (!image?.asset) {
                 return null
