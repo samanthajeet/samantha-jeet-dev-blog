@@ -15,10 +15,7 @@ interface Props {
 export async function generateMetadata(
     { params }: Props
 ): Promise<Metadata> {
-    // Wait for the slug
-    const slug = await params.slug
-    // Then get the post
-    const post = await getPost(slug)
+    const post = await getPost(params.slug)
 
     if (!post) {
         return {
@@ -27,39 +24,64 @@ export async function generateMetadata(
         }
     }
 
-    const ogImage = post.openGraph?.image
-        ? urlForImage(post.openGraph.image)?.url()
-        : post.mainImage
-            ? urlForImage(post.mainImage)?.url()
-            : null
+    // Safe image URL resolution with error handling
+    const getImageUrl = (image: any): string | null => {
+        try {
+            if (!image?.asset) {
+                return null
+            }
+            const imageUrl = urlForImage(image)?.url()
+            return imageUrl || null
+        } catch (error) {
+            console.warn('Error resolving image URL:', error)
+            return null
+        }
+    }
 
-    return {
-        title: post.openGraph?.title || post.title,
-        description: post.openGraph?.description || post.metaDescription,
+    // Safely get OG image URL
+    const ogImage = getImageUrl(post.openGraph?.image) ||
+        getImageUrl(post.mainImage) ||
+        '/default-og-image.jpg' // Fallback image
+
+    const metadata: Metadata = {
+        title: post.openGraph?.title || post.title || 'Blog Post',
+        description: post.openGraph?.description ||
+            post.metaDescription ||
+            'Read our latest blog post',
         openGraph: {
-            title: post.openGraph?.title || post.title,
-            description: post.openGraph?.description || post.metaDescription,
+            title: post.openGraph?.title || post.title || 'Blog Post',
+            description: post.openGraph?.description ||
+                post.metaDescription ||
+                'Read our latest blog post',
             type: post.openGraph?.type || 'article',
             images: ogImage ? [
                 {
                     url: ogImage,
                     width: 1200,
                     height: 630,
-                    alt: post.openGraph?.image?.alt || post.title,
+                    alt: post.openGraph?.image?.alt ||
+                        post.mainImage?.alt ||
+                        post.title ||
+                        'Blog post image'
                 }
             ] : [],
         },
         twitter: {
             card: post.twitter?.card || 'summary_large_image',
-            title: post.openGraph?.title || post.title,
-            description: post.openGraph?.description || post.metaDescription,
-            images: post.twitter?.image
-                ? [urlForImage(post.twitter.image)?.url() || '']
-                : ogImage
-                    ? [ogImage]
-                    : [],
+            title: post.openGraph?.title || post.title || 'Blog Post',
+            description: post.openGraph?.description ||
+                post.metaDescription ||
+                'Read our latest blog post',
+            images: (() => {
+                const twitterImageUrl = getImageUrl(post.twitter?.image)
+                if (twitterImageUrl) return [twitterImageUrl]
+                if (ogImage) return [ogImage]
+                return []
+            })(),
         },
     }
+
+    return metadata
 }
 
 export async function generateStaticParams() {
@@ -74,24 +96,41 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogPost({ params }: Props) {
-    const slug = await params.slug
-    const post = await getPost(slug)
+    const post = await getPost(params.slug)
 
     if (!post) {
         notFound()
     }
 
-    const author: Author = await getAuthor(post.author.name);
+    // Safe image handling for the main content
+    const getImageUrl = (image: any): string | null => {
+        try {
+            if (!image?.asset) {
+                return null
+            }
+            const imageUrl = urlForImage(image)?.url()
+            return imageUrl || null
+        } catch (error) {
+            console.warn('Error resolving image URL:', error)
+            return null
+        }
+    }
+
+    const mainImageUrl = getImageUrl(post.mainImage)
+    const author: Author = await getAuthor(post.author.name)
 
     return (
         <BlogContent
             postId={post._id}
             content={post.body}
             title={post.title}
-            mainImage={post.mainImage}
+            mainImage={mainImageUrl ? {
+                ...post.mainImage,
+                url: mainImageUrl
+            } : undefined}
             author={author}
             publishedAt={post.publishedAt}
             comments={post.comments}
         />
-    );
+    )
 }
