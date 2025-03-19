@@ -26,9 +26,7 @@ export interface Author {
 export interface Post {
     _id: string
     title: string
-    slug: {
-        current: string
-    }
+    slug: string
     mainImage?: SanityImage
     excerpt?: string
     body: PortableTextBlock[]

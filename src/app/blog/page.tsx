@@ -13,8 +13,28 @@ function formatDate(date: string) {
     })
 }
 
+const getImageUrl = (image: any): string | null => {
+    try {
+        if (!image?.asset) {
+            return null;
+        }
+        return urlForImage(image)?.url() || null;
+    } catch (error) {
+        console.warn('Error resolving image URL:', error);
+        return null;
+    }
+};
+
 export default async function Blog() {
     const posts: Post[] = await getPosts();
+
+    // Filter out posts without slugs and ensure they have valid slugs
+    const validPosts = posts.filter(post => {
+        if (typeof post.slug === 'string') {
+            return post.slug;
+        }
+        return post.slug;
+    });
 
     return (
         <div className="py-12 px-4">
@@ -28,17 +48,19 @@ export default async function Blog() {
                 </h1>
             </div>
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                {posts.map((post: Post) => (
+                {validPosts.map((post: Post) => (
                     <article key={post._id} className="group bg-white rounded-lg shadow-lg overflow-hidden flex flex-col h-full transform hover:-translate-y-1 transition-all duration-300 border-2 border-dark/10">
                         {post.mainImage && (
                             <div className="relative aspect-square">
                                 <div className="absolute inset-0 bg-dark/5 group-hover:bg-transparent transition-colors duration-300 z-10"></div>
-                                <Image
-                                    src={urlForImage(post.mainImage)?.url() || ''}
-                                    alt={post.title}
-                                    fill
-                                    className="object-cover filter saturate-[0.9] group-hover:saturate-100 transition-all duration-300"
-                                />
+                                {getImageUrl(post.mainImage) ? (
+                                    <Image
+                                        src={getImageUrl(post.mainImage) || ''}
+                                        alt={post.mainImage.alt || post.title}
+                                        fill
+                                        className="object-cover filter saturate-[0.9] group-hover:saturate-100 transition-all duration-300"
+                                    />
+                                ) : null}
                             </div>
                         )}
                         <div className="px-6 pt-4">
@@ -50,7 +72,7 @@ export default async function Blog() {
                             <div className="flex-1">
                                 <h2 className="text-[1.25rem] font-bold mb-2">
                                     <Link
-                                        href={`/blog/${post.slug.current}`}
+                                        href={`/blog/${post.slug}`}
                                         className="font-sans text-dark relative z-10 inline-block"
                                     >
                                         <span className="relative inline-block w-full">
@@ -67,10 +89,10 @@ export default async function Blog() {
                             <div className="mt-auto pt-4 border-t border-dark/20">
                                 {post.author && (
                                     <div className="flex items-center mb-3">
-                                        {post.author.image && (
+                                        {post.author.image && getImageUrl(post.author.image) && (
                                             <div className="relative h-8 w-8 rounded-full overflow-hidden mr-3">
                                                 <Image
-                                                    src={urlForImage(post.author.image)?.url() || ''}
+                                                    src={getImageUrl(post.author.image) || ''}
                                                     alt={post.author.name}
                                                     fill
                                                     className="object-cover"

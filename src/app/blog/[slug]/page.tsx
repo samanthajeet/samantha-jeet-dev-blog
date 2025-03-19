@@ -88,9 +88,9 @@ export async function generateStaticParams() {
 
     // Add null check and filter out any posts without slugs
     return posts
-        ?.filter((post: Post) => post?.slug?.current)
+        ?.filter((post: Post) => post?.slug)
         .map((post: Post) => ({
-            slug: post.slug.current,
+            slug: post.slug,
         })) || []
 }
 

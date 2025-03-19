@@ -5,21 +5,34 @@ import Link from 'next/link'
 import { urlForImage } from '../lib/sanity.image'
 import { SanityImage } from '@/types'
 
+const getImageUrl = (image: any): string | null => {
+    try {
+        if (!image?.asset) {
+            return null;
+        }
+        return urlForImage(image)?.url() || null;
+    } catch (error) {
+        console.warn('Error resolving image URL:', error);
+        return null;
+    }
+};
 
 export const portableTextComponents = {
     types: {
         image: ({ value }: { value: SanityImage }) => {
-            const imageUrl = urlForImage(value)?.url()
+            const imageUrl = getImageUrl(value)
             if (!imageUrl) return null
 
             return (
-                <div className="relative w-full h-[400px] my-8">
-                    <Image
-                        src={imageUrl}
-                        alt={value.alt || ''}
-                        fill
-                        className="object-cover rounded-lg"
-                    />
+                <div className="my-12">
+                    <div className="relative w-full h-[400px]">
+                        <Image
+                            src={imageUrl}
+                            alt={value.alt || ''}
+                            fill
+                            className="object-cover rounded-lg"
+                        />
+                    </div>
                     {value.caption && (
                         <div className="text-center text-sm text-brand-sage mt-2">
                             {value.caption}

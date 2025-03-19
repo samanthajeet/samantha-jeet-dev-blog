@@ -18,15 +18,26 @@ export async function getPosts() {
     *[_type == "post" && defined(slug.current) && !(_id in path("drafts.**"))] | order(publishedAt desc) {
       _id,
       title,
-      "slug": slug.current,
       slug,
-      mainImage,
+      "slug": slug.current,
+      mainImage {
+        asset->,
+        alt,
+        caption
+      },
       publishedAt,
       excerpt,
-      categories[]->,
+      categories[]->{
+        _id,
+        title,
+        "slug": slug.current,
+        color
+      },
       author->{
         name,
-        image,
+        image {
+          asset->
+        },
         bio
       }
     }
@@ -36,24 +47,36 @@ export async function getPosts() {
 
 export async function getPost(slug: string) {
   const post = await client.fetch(`
-  *[_type == "post" && slug.current == $slug][0] {
-    _id,
-    title,
-    mainImage,
-    body,
-    excerpt,
-    author->{
-      name,
-      image,
-      bio
-    },
-    publishedAt,
-    comments[]->,
-    categories[]->,
-    openGraph,
-    twitter
-  }
-`, { slug });
+    *[_type == "post" && slug.current == $slug && !(_id in path("drafts.**"))][0] {
+      _id,
+      title,
+      mainImage {
+        asset->,
+        alt,
+        caption
+      },
+      body[] {
+        ...,
+        _type == "image" => {
+          ...,
+          asset->
+        }
+      },
+      excerpt,
+      author->{
+        name,
+        image {
+          asset->
+        },
+        bio
+      },
+      publishedAt,
+      comments[]->,
+      categories[]->,
+      openGraph,
+      twitter
+    }
+  `, { slug });
   return post;
 }
 
