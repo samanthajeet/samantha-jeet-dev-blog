@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { urlForImage } from '../../lib/sanity.image';
-import { Post } from '@/types';
+import { Post, SanityImage } from '@/types';
 import { getPosts } from '../../lib/sanity.client';
 
 
@@ -13,7 +13,7 @@ function formatDate(date: string) {
     })
 }
 
-const getImageUrl = (image: any): string | null => {
+const getImageUrl = (image: SanityImage): string | null => {
     try {
         if (!image?.asset) {
             return null;

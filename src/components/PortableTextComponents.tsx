@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { urlForImage } from '../lib/sanity.image'
 import { SanityImage } from '@/types'
 
-const getImageUrl = (image: any): string | null => {
+const getImageUrl = (image: SanityImage): string | null => {
     try {
         if (!image?.asset) {
             return null;
