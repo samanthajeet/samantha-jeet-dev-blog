@@ -56,8 +56,8 @@ export default async function BlogContent({ content, title, mainImage, author, p
                             </div>
                         )}
                         <div>
-                            <p className="text-brand-navy font-medium">{author.name}</p>
-                            <p className="text-brand-sage text-sm">
+                            <p className="text-dark font-medium">{author.name}</p>
+                            <p className="text-tertiary text-sm">
                                 {formattedDate}
                             </p>
                         </div>
@@ -82,13 +82,22 @@ export default async function BlogContent({ content, title, mainImage, author, p
                             image: ({ value }: { value: SanityImage }) => {
                                 const imageUrl = urlForImage(value)?.url()
                                 return imageUrl ? (
-                                    <div className="relative w-full h-[400px] my-8">
-                                        <Image
-                                            src={imageUrl}
-                                            alt={value.alt || ''}
-                                            fill
-                                            className="object-cover rounded-lg"
-                                        />
+                                    <div className="my-12">
+                                        <div className="relative w-full h-[400px] my-8">
+                                            <Image
+                                                src={imageUrl}
+                                                alt={value.alt || ''}
+                                                fill
+                                                className="object-cover rounded-lg"
+                                            />
+                                        </div>
+                                        {value.caption && (
+                                            <div className="mt-2 text-center">
+                                                <span className="inline-block text-sm text-secondary pt-2 px-4 italic font-light">
+                                                    {value.caption}
+                                                </span>
+                                            </div>
+                                        )}
                                     </div>
                                 ) : null
                             }
@@ -119,8 +128,8 @@ export default async function BlogContent({ content, title, mainImage, author, p
             {comments && comments.length > 0 ? (
                 <Comments comments={comments} />
             ) : (
-                <div className="mt-16 pt-8 border-t border-brand-navy/10">
-                    <p className="text-brand-navy/60 text-center italic">
+                <div className="mt-16 pt-8 border-t border-dark">
+                    <p className="text-dark text-center italic">
                         No comments yet. Be the first to comment!
                     </p>
                 </div>

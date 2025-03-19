@@ -25,7 +25,7 @@ export default function AuthorCard({ name, image, bio }: AuthorProps) {
                     </div>
                 )}
                 <div>
-                    <h3 className="text-xl font-sans text-brand-navy mb-2">
+                    <h3 className="text-xl font-sans text-dark mb-2">
                         by <span className="font-permanent-marker">{name}</span>
                     </h3>
                     {bio && (

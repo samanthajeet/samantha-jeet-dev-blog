@@ -57,8 +57,8 @@ export default function CommentForm({ postId }: CommentFormProps) {
     }
 
     return (
-        <div className="mt-16 pt-8 border-t border-brand-navy/10">
-            <h2 className="text-2xl font-permanent-marker text-brand-navy mb-8 relative inline-block">
+        <div className="mt-16 pt-8 border-t border-dark/10">
+            <h2 className="text-2xl font-permanent-marker text-dark mb-8 relative inline-block">
                 <span className="relative z-10">Leave a Comment</span>
                 <span
                     className="absolute -inset-x-2 inset-y-0 block bg-secondary/20 -skew-y-3 -z-0"

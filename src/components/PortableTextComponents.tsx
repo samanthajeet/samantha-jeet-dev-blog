@@ -22,7 +22,6 @@ export const portableTextComponents = {
         image: ({ value }: { value: SanityImage }) => {
             const imageUrl = getImageUrl(value)
             if (!imageUrl) return null
-
             return (
                 <div className="my-12">
                     <div className="relative w-full h-[400px]">
@@ -33,11 +32,6 @@ export const portableTextComponents = {
                             className="object-cover rounded-lg"
                         />
                     </div>
-                    {value.caption && (
-                        <div className="text-center text-sm text-brand-sage mt-2">
-                            {value.caption}
-                        </div>
-                    )}
                 </div>
             )
         }
@@ -50,7 +44,7 @@ export const portableTextComponents = {
                     href={value?.href}
                     target={target}
                     rel={target === '_blank' ? 'noopener noreferrer' : undefined}
-                    className="text-brand-coral hover:text-brand-coral/80 transition-colors"
+                    className="text-secondary hover:text-secondary/80 transition-colors"
                 >
                     {children}
                 </Link>
@@ -60,7 +54,7 @@ export const portableTextComponents = {
             return (
                 <Link
                     href={`/blog/${value?.reference?.slug?.current}`}
-                    className="text-brand-coral hover:text-brand-coral/80 transition-colors"
+                    className="text-secondary hover:text-secondary/80 transition-colors"
                 >
                     {children}
                 </Link>
@@ -78,7 +72,7 @@ export const portableTextComponents = {
         h3: ({ children }: { children: React.ReactNode }) => <h3 className="text-2xl font-bold mt-6 mb-3 text-dark">{children}</h3>,
         h4: ({ children }: { children: React.ReactNode }) => <h4 className="text-xl font-bold mt-4 mb-2 text-dark">{children}</h4>,
         blockquote: ({ children }: { children: React.ReactNode }) => (
-            <blockquote className="border-l-4 border-brand-cream pl-4 my-4 italic text-brand-navy/80">
+            <blockquote className="border-l-4 border-light pl-4 my-4 italic text-dark/80">
                 {children}
             </blockquote>
         ),

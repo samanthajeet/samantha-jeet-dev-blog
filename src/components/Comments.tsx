@@ -21,8 +21,8 @@ export default function Comments({ comments }: CommentsProps) {
     const hasMoreComments = comments.length > 3
 
     return (
-        <div className="mt-16 pt-8 border-t border-brand-navy/10">
-            <h2 className="text-2xl font-permanent-marker text-brand-navy mb-8 relative inline-block">
+        <div className="mt-16 pt-8 border-t border-dark/10">
+            <h2 className="text-2xl font-permanent-marker text-dark mb-8 relative inline-block">
                 <span className="relative z-10">Comments ({comments.length})</span>
                 <span
                     className="absolute -inset-x-2 inset-y-0 block bg-secondary/20 -skew-y-3 -z-0"
@@ -34,17 +34,17 @@ export default function Comments({ comments }: CommentsProps) {
                 {displayComments.map((comment) => (
                     <div
                         key={comment._id}
-                        className="bg-white p-6 rounded-lg shadow-sm border-2 border-brand-navy/10"
+                        className="bg-white p-6 rounded-lg shadow-sm border-2 border-dark/10"
                     >
                         <div className="flex justify-between items-start mb-2">
-                            <h3 className="font-medium text-brand-navy">
+                            <h3 className="font-medium text-dark">
                                 {comment.name}
                             </h3>
-                            <span className="text-xs text-brand-sage font-mono">
+                            <span className="text-xs text-secondary font-mono">
                                 {formatDate(comment.createdAt)}
                             </span>
                         </div>
-                        <p className="text-brand-navy/80 whitespace-pre-line">
+                        <p className="text--dark/80 whitespace-pre-line">
                             {comment.text}
                         </p>
                     </div>
@@ -54,7 +54,7 @@ export default function Comments({ comments }: CommentsProps) {
             {hasMoreComments && (
                 <button
                     onClick={() => setIsExpanded(!isExpanded)}
-                    className="mt-6 text-brand-coral hover:text-brand-coral/80 font-medium transition-colors"
+                    className="mt-6 text-primary hover:text-primary/80 font-medium transition-colors"
                 >
                     {isExpanded ? 'Show Less' : `Show All Comments (${comments.length})`}
                 </button>
