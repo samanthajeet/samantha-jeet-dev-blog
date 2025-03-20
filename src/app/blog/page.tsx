@@ -106,7 +106,7 @@ export default async function Blog() {
                                     <div className="flex flex-wrap gap-2">
                                         {post.categories.map((cat) => (
                                             <span
-                                                key={cat.slug.current}
+                                                key={`${cat._id}-${cat.title}`}
                                                 className="text-[.7rem] px-2 py-1 border-1 uppercase"
                                                 style={{
                                                     color: cat.color,

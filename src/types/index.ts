@@ -11,6 +11,7 @@ export interface SanityImage {
 }
 
 export interface Category {
+    _id: string
     color: string
     title: string
     value: string
