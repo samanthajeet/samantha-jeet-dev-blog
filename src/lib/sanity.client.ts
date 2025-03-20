@@ -41,7 +41,7 @@ export async function getPosts() {
         bio
       }
     }
-  `, {}, {
+  `, undefined, {
     cache: 'no-store',
     next: { revalidate: 0 }
   });
@@ -50,7 +50,7 @@ export async function getPosts() {
 
 export async function getPost(slug: string) {
   const post = await client.fetch(`
-    *[_type == "post" && slug.current == $slug && !(_id in path("drafts.**"))][0] {
+    *[_type == "post" && slug.current == $slug][0] {
       _id,
       title,
       mainImage {
@@ -79,7 +79,10 @@ export async function getPost(slug: string) {
       openGraph,
       twitter
     }
-  `, { slug });
+  `, { slug }, {
+    cache: 'no-store',
+    next: { revalidate: 0 }
+  });
   return post;
 }
 

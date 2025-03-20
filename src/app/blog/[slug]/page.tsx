@@ -94,9 +94,10 @@ export async function generateStaticParams() {
         })) || []
 }
 
-export default async function BlogPost(props: Props) {
-    const params = await props.params;
-    const post = await getPost(params.slug)
+export const revalidate = 0;
+
+export default async function BlogPost({ params }: Props) {
+    const post = await getPost((await params).slug)
 
     if (!post) {
         notFound()

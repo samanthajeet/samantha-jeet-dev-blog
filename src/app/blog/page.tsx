@@ -4,6 +4,7 @@ import { urlForImage } from '../../lib/sanity.image';
 import { Post, SanityImage } from '@/types';
 import { getPosts } from '../../lib/sanity.client';
 
+export const revalidate = 0;
 
 function formatDate(date: string) {
     return new Date(date).toLocaleDateString('en-US', {
