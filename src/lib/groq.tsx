@@ -78,6 +78,8 @@ export const singlequery = groq`
     "date": coalesce(publishedAt,_createdAt),
     "image": mainImage
   },
+  comments[]->,
+  openGraph,
 }
 `;
 
