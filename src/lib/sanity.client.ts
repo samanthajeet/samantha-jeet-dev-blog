@@ -1,5 +1,5 @@
 import { createClient } from 'next-sanity';
-import { allPostsQuery, singlePostQuery, pathsQuery, allCategoriesQuery, postsByCategoryQuery, postCommentsQuery, singleAuthorQuery, postquery } from './groq';
+import { singlequery, allPostsQuery, singlePostQuery, pathsQuery, allCategoriesQuery, postsByCategoryQuery, postCommentsQuery, singleAuthorQuery, postquery, pathquery } from './groq';
 
 export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!;
 export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
@@ -25,6 +25,21 @@ export async function getPosts() {
 export async function getAllPosts() {
   if (client) {
     return (await client.fetch(postquery)) || [];
+  }
+  return [];
+}
+
+export async function getPostBySlug(slug: string) {
+  if (client) {
+    return (await client.fetch(singlequery, { slug })) || {};
+  }
+  return {};
+}
+
+export async function getAllPostsSlugs() {
+  if (client) {
+    const slugs = (await client.fetch(pathquery)) || [];
+    return slugs.map((slug: string) => ({ slug }));
   }
   return [];
 }

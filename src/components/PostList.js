@@ -82,7 +82,7 @@ export default function PostList({
                                 "mt-2    dark:text-white"
                             )}>
                             <Link
-                                href={`/post/${pathPrefix ? `${pathPrefix}/` : ""}${post.slug?.current
+                                href={`/blog_v2/${post.slug?.current
                                     }`}>
                                 <span
                                     className="text-black bg-gradient-to-r from-primary to-primary bg-[length:0px_10px] bg-left-bottom
@@ -102,7 +102,7 @@ export default function PostList({
                             {post.excerpt && (
                                 <p className="mt-2 line-clamp-3 text-sm text-gray-500 dark:text-gray-400">
                                     <Link
-                                        href={`/blog/${post.slug?.current}`}>
+                                        href={`/blog_v2/${post.slug?.current}`}>
                                         {post.excerpt}
                                     </Link>
                                 </p>
