@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Label from "../ui/label";
 import { Category } from "../../types";
 
