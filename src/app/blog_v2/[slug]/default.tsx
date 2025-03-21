@@ -8,6 +8,8 @@ import { parseISO, format } from "date-fns";
 import CategoryLabel from "@/components/blog/category";
 import AuthorCard from "@/components/AuthorCard";
 import type { SanityImage, Post } from "@/types";
+import CommentForm from "@/components/CommentForm";
+import Comments from '@/components/Comments'
 
 interface Props {
     post: Post
@@ -120,6 +122,19 @@ export default async function Post(props: Props) {
                     </div>
                     {post.author && <AuthorCard name={post.author.name} image={post.author.image || undefined} bio={post.author.bio} />}
                 </article>
+            </Container>
+            <Container>
+                {post.comments && post.comments.length > 0 ? (
+                    <Comments comments={post.comments} />
+                ) : (
+                    <div className="mt-16 pt-8 border-t border-dark">
+                        <p className="text-dark text-center italic">
+                            No comments yet. Be the first to comment!
+                        </p>
+                    </div>
+                )}
+
+                <CommentForm postId={post._id} />
             </Container>
         </>
     );
