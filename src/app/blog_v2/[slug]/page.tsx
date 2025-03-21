@@ -6,12 +6,14 @@ export async function generateStaticParams() {
     return await getAllPostsSlugs();
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }) {
+    const params = await props.params;
     const post = await getPostBySlug(params.slug);
     return { title: post.title, description: post.excerpt };
 }
 
-export default async function PostDefault({ params }: { params: { slug: string } }) {
+export default async function PostDefault(props: { params: Promise<{ slug: string }> }) {
+    const params = await props.params;
     const post = await getPostBySlug(params.slug);
     return <PostPage post={post} />;
 }

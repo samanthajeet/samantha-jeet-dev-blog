@@ -7,7 +7,6 @@ import { urlForImage } from "@/lib/sanity.image";
 import { parseISO, format } from "date-fns";
 import CategoryLabel from "@/components/blog/category";
 import AuthorCard from "@/components/AuthorCard";
-import { getPost } from "@/lib/sanity.client";
 import type { SanityImage, Post } from "@/types";
 
 interface Props {
@@ -15,9 +14,9 @@ interface Props {
 }
 
 export default async function Post(props: Props) {
-    const post = await getPost(props.post.slug)
-
+    const post = props.post;
     const slug = post?.slug;
+    console.log(post);
 
     if (!slug) {
         notFound();
@@ -31,7 +30,7 @@ export default async function Post(props: Props) {
         ? urlForImage(post.author.image)
         : null;
 
-    const getImageUrl = (image: string) => {
+    const getImageUrl = (image: SanityImage | null): string | null => {
         try {
             if (!image) {
                 return null
@@ -43,9 +42,7 @@ export default async function Post(props: Props) {
             return null
         }
     }
-
-
-    const mainImageUrl = getImageUrl(post.mainImage)
+    const mainImageUrl = getImageUrl(post?.mainImage || null)
 
     return (
         <>
@@ -55,17 +52,17 @@ export default async function Post(props: Props) {
                         <CategoryLabel categories={post.categories} />
                     </div>
 
-                    <h1 className="text-brand-primary mb-3 mt-2 text-center text-3xl font-semibold tracking-tight dark:text-white lg:text-4xl lg:leading-snug">
+                    <h1 className="text-brand-primary mb-3 mt-2 text-center text-4xl font-semibold tracking-tight text-black lg:text-4xl lg:leading-snug font-permanent-marker">
                         {post.title}
                     </h1>
 
-                    <div className="mt-3 flex justify-center space-x-3 text-gray-500 ">
+                    <div className="mt-3 flex justify-center space-x-3 text-dark ">
                         <div className="flex items-center gap-3">
                             <div className="relative h-10 w-10 flex-shrink-0">
                                 {AuthorimageProps && (
                                     <Link href={`/author/${post.author.slug.current}`}>
                                         <Image
-                                            src={post.author.image?.asset?.url}
+                                            src={getImageUrl(post.author.image as SanityImage) || ''}
                                             alt={post?.author?.name}
                                             className="rounded-full object-cover"
                                             fill
@@ -112,7 +109,7 @@ export default async function Post(props: Props) {
 
             <Container>
                 <article className="mx-auto max-w-screen-md ">
-                    <div className="prose mx-auto my-3 dark:prose-invert prose-a:text-blue-600">
+                    <div className="mx-auto my-3 a:text-tertiary text-dark">
                         {post.body && <PortableText value={post.body} />}
                     </div>
                     <div className="mb-7 mt-7 flex justify-center">
@@ -122,24 +119,10 @@ export default async function Post(props: Props) {
                             ← View all posts
                         </Link>
                     </div>
-                    {post.author && <AuthorCard name={post.author.name} image={post.author.image} bio={post.author.bio} />}
+                    {post.author && <AuthorCard name={post.author.name} image={post.author.image || undefined} bio={post.author.bio} />}
                 </article>
             </Container>
         </>
     );
 }
 
-const MainImage = ({ image }: { image: SanityImage }) => {
-    return (
-        <div className="mb-12 mt-12 ">
-            <Image src={""} {...urlForImage(image)} alt={image.alt || "Thumbnail"} />
-            <figcaption className="text-center ">
-                {image.caption && (
-                    <span className="text-sm italic text-gray-600 dark:text-gray-400">
-                        {image.caption}
-                    </span>
-                )}
-            </figcaption>
-        </div>
-    );
-};

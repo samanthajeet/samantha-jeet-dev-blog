@@ -21,20 +21,25 @@ export interface Category {
 }
 export interface Author {
     name: string
-    image?: SanityImage | undefined
+    image: SanityImage | null
     bio?: PortableTextBlock[] | undefined
+    slug: {
+        current: string
+    }
 }
 export interface Post {
     _id: string
     title: string
     slug: string
-    mainImage?: SanityImage
+    mainImage?: SanityImage | null
     excerpt?: string
     body: PortableTextBlock[]
     publishedAt: string
     categories: Category[]
     author: Author
     comments: Comment[]
+    estReadingTime: number
+    _createdAt: string
 }
 
 export interface Comment {

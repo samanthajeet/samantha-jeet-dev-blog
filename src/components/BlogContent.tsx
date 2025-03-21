@@ -74,7 +74,7 @@ export default async function BlogContent({ content, title, mainImage, author, p
                     />
                 </div>
             )}
-            <div className="prose max-w-none">
+            <div className="max-w-none">
                 <PortableText
                     value={content}
                     components={{
@@ -122,7 +122,7 @@ export default async function BlogContent({ content, title, mainImage, author, p
                 />
             </div>
             {author.name ? (
-                <AuthorCard name={author.name} image={author.image} bio={author.bio} />
+                <AuthorCard name={author.name} image={author.image || undefined} bio={author.bio} />
             ) : null}
 
             {comments && comments.length > 0 ? (

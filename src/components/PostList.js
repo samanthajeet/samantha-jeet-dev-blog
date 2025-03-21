@@ -10,7 +10,6 @@ export default function PostList({
     post,
     aspect,
     minimal,
-    pathPrefix,
     preloadImage,
     fontSize,
     fontWeight
@@ -79,7 +78,7 @@ export default function PostList({
                                 fontWeight === "normal"
                                     ? "line-clamp-2 font-medium  tracking-normal text-black"
                                     : "font-semibold leading-snug tracking-tight",
-                                "mt-2    dark:text-white"
+                                "mt-2"
                             )}>
                             <Link
                                 href={`/blog_v2/${post.slug?.current

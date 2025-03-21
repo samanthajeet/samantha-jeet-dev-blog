@@ -7,13 +7,7 @@ export default function Label(props) {
         '#9f86c0': "text-[#9f86c0]",
         '#ee9b00': "text-[#ee9b00]",
     };
-    const bgcolor = {
-        green: "bg-emerald-50",
-        blue: "bg-blue-50",
-        orange: "bg-orange-50",
-        purple: "bg-purple-50",
-        pink: "bg-pink-50"
-    };
+
     const margin = props.nomargin;
 
     if (props.pill) {
