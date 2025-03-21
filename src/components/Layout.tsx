@@ -23,7 +23,7 @@ export default function Layout({ children }: LayoutProps) {
                         </div>
                         <div className="flex space-x-8">
                             <Link
-                                href="/blog"
+                                href="/blog_v2"
                                 className="inline-flex items-center px-1 pt-1 text-tertiary font-sans hover:text-secondary "
                             >
                                 blog
