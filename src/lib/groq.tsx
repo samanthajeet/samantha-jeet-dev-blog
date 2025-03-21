@@ -1,8 +1,8 @@
 import { groq } from "next-sanity"
 
-// Get all posts v2
+
 export const postquery = groq`
-*[_type == "post"] | order(publishedAt desc, _createdAt desc) {
+*[_type == "post" && defined(publishedAt) && !(_id in path("drafts.**"))] | order(publishedAt desc) {
   _id,
   _createdAt,
   publishedAt,

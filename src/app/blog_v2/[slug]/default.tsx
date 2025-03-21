@@ -16,7 +16,6 @@ interface Props {
 export default async function Post(props: Props) {
     const post = props.post;
     const slug = post?.slug;
-    console.log(post);
 
     if (!slug) {
         notFound();
