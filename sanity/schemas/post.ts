@@ -84,78 +84,9 @@ const post = {
             of: [{ type: 'reference', to: { type: 'comment' } }],
         },
         {
-            name: 'body',
-            title: 'Body',
-            type: 'array',
-            group: 'content',
-            of: [
-                {
-                    type: 'block',
-                    styles: [
-                        { title: 'Normal', value: 'normal' },
-                        { title: 'H1', value: 'h1' },
-                        { title: 'H2', value: 'h2' },
-                        { title: 'H3', value: 'h3' },
-                        { title: 'H4', value: 'h4' },
-                        { title: 'Quote', value: 'blockquote' }
-                    ],
-                    marks: {
-                        decorators: [
-                            { title: 'Strong', value: 'strong' },
-                            { title: 'Emphasis', value: 'em' },
-                            { title: 'Code', value: 'code' }
-                        ],
-                        annotations: [
-                            {
-                                name: 'link',
-                                type: 'object',
-                                title: 'URL',
-                                fields: [
-                                    {
-                                        title: 'URL',
-                                        name: 'href',
-                                        type: 'url'
-                                    }
-                                ]
-                            },
-                            {
-                                name: 'internalLink',
-                                type: 'object',
-                                title: 'Internal link',
-                                fields: [
-                                    {
-                                        name: 'reference',
-                                        type: 'reference',
-                                        title: 'Reference',
-                                        to: [
-                                            { type: 'post' }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                },
-                {
-                    type: 'image',
-                    options: { hotspot: true },
-                    fields: [
-                        {
-                            name: 'alt',
-                            type: 'string',
-                            title: 'Alternative text',
-                            description: 'Important for SEO and accessibility.',
-                            validation: (rule: Rule) => rule.required()
-                        },
-                        {
-                            name: 'caption',
-                            type: 'string',
-                            title: 'Caption',
-                            description: 'Image caption'
-                        }
-                    ]
-                }
-            ]
+            name: "body",
+            title: "Body",
+            type: "blockContent"
         },
 
         // SEO & Social Group
@@ -185,31 +116,6 @@ const post = {
                 layout: 'tags'
             },
             description: 'Add relevant keywords (optional)',
-        },
-        {
-            name: 'canonicalUrl',
-            title: 'Canonical URL',
-            type: 'url',
-            group: 'seo',
-            description: 'Use this to specify the preferred version of a page for SEO',
-        },
-        {
-            name: 'socialImage',
-            title: 'Social Sharing Image',
-            type: 'image',
-            group: 'seo',
-            description: 'Image for social media sharing (1200x630px recommended)',
-            options: {
-                hotspot: true,
-            },
-            fields: [
-                {
-                    name: 'alt',
-                    type: 'string',
-                    title: 'Alternative text',
-                    validation: (rule: Rule) => rule.required(),
-                }
-            ]
         },
         {
             name: 'openGraph',

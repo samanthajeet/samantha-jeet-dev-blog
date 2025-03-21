@@ -1,0 +1,127 @@
+import { groq } from "next-sanity"
+
+// Get all posts v2
+export const postquery = groq`
+*[_type == "post"] | order(publishedAt desc, _createdAt desc) {
+  _id,
+  _createdAt,
+  publishedAt,
+  mainImage {
+    ...,
+    "blurDataURL":asset->metadata.lqip,
+    "ImageColor": asset->metadata.palette.dominant.background,
+  },
+  featured,
+  excerpt,
+  slug,
+  title,
+  author-> {
+    _id,
+    image,
+    slug,
+    name
+  },
+  categories[]->,
+}
+`;
+
+export const allPostsQuery = groq`
+  *[_type == "post" && defined(slug.current)] | order(publishedAt desc) {
+    _id,
+    title,
+    slug,
+    "slug": slug.current,
+    mainImage {
+      asset->,
+      alt,
+      caption,
+      "blurDataURL":asset->metadata.lqip,
+      "ImageColor": asset->metadata.palette.dominant.background,
+    },
+    publishedAt,
+    excerpt,
+    categories[]->{
+      _id,
+      title,
+      "slug": slug.current,
+      color
+    },
+    author->{
+      _id,
+      name,
+      image,
+      slug,
+      bio
+    }
+  }
+`
+
+export const singlePostQuery = groq`
+  *[_type == "post" && slug.current == $slug][0] {
+    _id,
+    title,
+    mainImage {
+      asset->,
+      alt,
+      caption
+    },
+    body[] {
+      ...,
+      _type == "image" => {
+        ...,
+        asset->
+      }
+    },
+    excerpt,
+    author->{
+      name,
+      image {
+        asset->
+      },
+      bio
+    },
+    publishedAt,
+    comments[]->,
+    categories[]->,
+    openGraph,
+    twitter
+  }
+`
+
+export const pathsQuery = groq`
+  *[_type == "post" && defined(slug.current)][].slug.current
+`
+
+export const allCategoriesQuery = groq`
+  *[_type == "category"] | order(title asc) {
+    _id,
+    title,
+    slug,
+    color,
+    value,
+    description
+  }
+`
+
+export const postsByCategoryQuery = groq`
+  *[_type == "post" && $slug in categories[]->slug.current] {
+    ...,
+    author->,
+    categories[]->
+  }
+`
+
+export const postCommentsQuery = groq`
+  *[_type == "comment" && post._ref == $postId] {
+    ...,
+    post->
+  }
+`
+
+export const singleAuthorQuery = groq`
+  *[_type == "author" && name == $name][0] {
+    name,
+    image,
+    bio
+  }
+`

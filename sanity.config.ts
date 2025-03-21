@@ -2,6 +2,11 @@ import { defineConfig, SchemaTypeDefinition } from 'sanity';
 import { structureTool } from 'sanity/structure';
 import { visionTool } from '@sanity/vision';
 import { schemaTypes } from './sanity/schemas/index';
+import { table } from '@sanity/table'
+import {
+    pageStructure,
+} from "./src/lib/plugins/settings";
+import settings from './sanity/schemas/settings';
 
 export default defineConfig({
     name: 'default',
@@ -10,7 +15,7 @@ export default defineConfig({
     dataset: process.env.SANITY_STUDIO_DATASET!,
     basePath: '/',
     studioHost: 'samanthajeet',
-    plugins: [structureTool(), visionTool()],
+    plugins: [structureTool({ structure: pageStructure([settings]) }), visionTool(), table()],
     schema: {
         types: schemaTypes as SchemaTypeDefinition[],
     },

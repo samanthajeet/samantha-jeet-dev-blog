@@ -1,4 +1,5 @@
 import { createClient } from 'next-sanity';
+import { allPostsQuery, singlePostQuery, pathsQuery, allCategoriesQuery, postsByCategoryQuery, postCommentsQuery, singleAuthorQuery, postquery } from './groq';
 
 export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!;
 export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
@@ -13,122 +14,47 @@ export const client = createClient({
   token,
 });
 
+
 export async function getPosts() {
-  const posts = await client.fetch(`
-    *[_type == "post" && defined(slug.current)] | order(publishedAt desc) {
-      _id,
-      title,
-      slug,
-      "slug": slug.current,
-      mainImage {
-        asset->,
-        alt,
-        caption
-      },
-      publishedAt,
-      excerpt,
-      categories[]->{
-        _id,
-        title,
-        "slug": slug.current,
-        color
-      },
-      author->{
-        name,
-        image {
-          asset->
-        },
-        bio
-      }
-    }
-  `, undefined, {
+  return client.fetch(allPostsQuery, undefined, {
     cache: 'no-store',
     next: { revalidate: 0 }
-  });
-  return posts;
+  })
 }
+
+export async function getAllPosts() {
+  if (client) {
+    return (await client.fetch(postquery)) || [];
+  }
+  return [];
+}
+
 
 export async function getPost(slug: string) {
-  const post = await client.fetch(`
-    *[_type == "post" && slug.current == $slug][0] {
-      _id,
-      title,
-      mainImage {
-        asset->,
-        alt,
-        caption
-      },
-      body[] {
-        ...,
-        _type == "image" => {
-          ...,
-          asset->
-        }
-      },
-      excerpt,
-      author->{
-        name,
-        image {
-          asset->
-        },
-        bio
-      },
-      publishedAt,
-      comments[]->,
-      categories[]->,
-      openGraph,
-      twitter
-    }
-  `, { slug }, {
+  return client.fetch(singlePostQuery, { slug }, {
     cache: 'no-store',
     next: { revalidate: 0 }
-  });
-  return post;
+  })
 }
-
-export async function getAuthor(name: string) {
-  const author = await client.fetch(`
-    *[_type == "author" && name == $name][0] {
-      name,
-      image,
-      bio
-    }
-  `, { name });
-  return author;
-}
-
 
 export async function getCategories() {
-  const categories = await client.fetch(`
-    *[_type == "category"] | order(title asc) {
-      _id,
-      title,
-      slug,
-      color,
-      value,
-      description
-    }
-  `);
-  return categories;
-}
-
-export async function getCommentsForPost(postId: string) {
-  const comments = await client.fetch(`
-    *[_type == "comment" && post._ref == $postId] {
-      ...,
-      post->
-    }
-  `, { postId });
-  return comments;
+  return client.fetch(allCategoriesQuery)
 }
 
 export async function getPostsByCategory(slug: string) {
-  const posts = await client.fetch(`
-*[_type == "post" && $slug in categories[]->slug.current ] {
-  ...,
-  author->,
-  categories[]->,
+  return client.fetch(postsByCategoryQuery, { slug })
 }
-  `, { slug });
-  return posts;
+
+export async function getCommentsForPost(postId: string) {
+  return client.fetch(postCommentsQuery, { postId })
+}
+
+export async function generateStaticParams() {
+  const slugs = await client.fetch(pathsQuery)
+  return slugs.map((slug: string) => ({ slug }))
+}
+
+export async function getAuthor(name: string) {
+  const author = await client.fetch(singleAuthorQuery, { name });
+  return author;
 }
