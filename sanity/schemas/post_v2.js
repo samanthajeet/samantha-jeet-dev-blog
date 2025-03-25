@@ -1,8 +1,8 @@
 import { defineType, defineField } from 'sanity'
 
 const postSchema = defineType({
-    name: 'post',
-    title: 'Post',
+    name: 'post_v2',
+    title: 'Post_v2',
     type: 'document',
     initialValue: () => ({
         publishedAt: new Date().toISOString()

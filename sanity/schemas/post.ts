@@ -169,45 +169,6 @@ const post = {
                 }
             ]
         },
-        {
-            name: 'twitter',
-            title: 'Twitter Card',
-            type: 'object',
-            group: 'seo',
-            description: 'Additional settings for Twitter sharing',
-            fields: [
-                {
-                    name: 'card',
-                    title: 'Card Type',
-                    type: 'string',
-                    options: {
-                        list: [
-                            { title: 'Summary with Large Image', value: 'summary_large_image' },
-                            { title: 'Summary', value: 'summary' },
-                        ],
-                    },
-                    initialValue: 'summary_large_image',
-                },
-                {
-                    name: 'image',
-                    title: 'Twitter Image',
-                    type: 'image',
-                    description: 'Optional: Use a different image for Twitter. If left empty, will use Open Graph image',
-                    options: {
-                        hotspot: true,
-                    },
-                    fields: [
-                        {
-                            name: 'alt',
-                            type: 'string',
-                            title: 'Alternative text',
-                            validation: (rule: Rule) => rule.required(),
-                        }
-                    ]
-                }
-            ]
-        },
-
         // Metadata Group
         {
             name: 'language',

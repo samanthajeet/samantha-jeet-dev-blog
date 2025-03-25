@@ -2,17 +2,14 @@
 
 import { Comment } from '@/types'
 import { useState } from 'react'
+import { parseISO, format } from 'date-fns'
 
 interface CommentsProps {
     comments: Comment[]
 }
 
-function formatDate(date: string) {
-    return new Date(date).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    })
+const formatDate = (date: string) => {
+    return format(parseISO(date), 'MMMM dd, yyyy')
 }
 
 export default function Comments({ comments }: CommentsProps) {

@@ -101,7 +101,20 @@ const blockContentSchema = defineType({
                     title: "Caption",
                     description: "Image caption"
                 }
-            ]
+            ],
+            preview: {
+                select: {
+                    imageUrl: 'asset.url',
+                    caption: 'caption',
+                    alt: 'alt'
+                },
+                prepare({ imageUrl, caption, alt }) {
+                    return {
+                        title: caption || alt || 'Image',
+                        imageUrl
+                    }
+                }
+            }
         }),
     ]
 })

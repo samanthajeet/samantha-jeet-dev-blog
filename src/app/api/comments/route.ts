@@ -20,6 +20,7 @@ export async function POST(req: Request) {
             )
         }
 
+        // Create the comment first
         const comment = await client.create({
             _type: 'comment',
             name,
@@ -34,11 +35,21 @@ export async function POST(req: Request) {
             createdAt: new Date().toISOString(),
         })
 
-        return NextResponse.json({ message: 'Comment submitted', comment })
+        // Then update the post to include this comment
+        await client
+            .patch(postId)
+            .setIfMissing({ comments: [] })
+            .append('comments', [{
+                _type: 'reference',
+                _ref: comment._id
+            }])
+            .commit()
+
+        return NextResponse.json({ message: 'Comment created successfully' })
     } catch (error) {
-        console.error('Error submitting comment:', error)
+        console.error('Error creating comment:', error)
         return NextResponse.json(
-            { error: 'Error submitting comment' },
+            { error: 'Error creating comment' },
             { status: 500 }
         )
     }

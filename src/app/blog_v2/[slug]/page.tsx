@@ -7,51 +7,36 @@ export async function generateStaticParams() {
     return await getAllPostsSlugs();
 }
 
-export async function generateMetadata(props: { params: Promise<{ slug: string }> }) {
-    const params = await props.params;
-    const post = await getPostBySlug(params.slug);
-    // Safe image URL resolution with error handling
-    const getImageUrl = (image: { asset?: { _ref: string } }): string | null => {
-        try {
-            if (!image?.asset) {
-                return null
-            }
-            const imageUrl = urlForImage(image)?.url()
-            return imageUrl || null
-        } catch (error) {
-            console.warn('Error resolving image URL:', error)
-            return null
-        }
-    }
-    const ogImage = getImageUrl(post.openGraph?.image) ||
-        getImageUrl(post.mainImage) ||
-        '/default-og-image.jpg' // Fallback image
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+    const resolvedParams = await params;
+    const post = await getPostBySlug(resolvedParams.slug);
 
-    const metadata: Metadata = {
-        title: post.openGraph?.title || post.title || 'Blog Post',
-        description: post.openGraph?.description ||
-            post.metaDescription ||
-            'Read our latest blog post',
+    return {
+        title: post.seoTitle || post.title,
+        description: post.metaDescription || post.excerpt,
+        keywords: post.keywords,
+        robots: post.isIndexed ? 'index, follow' : 'noindex, nofollow',
         openGraph: {
-            title: post.openGraph?.title || post.title || 'Blog Post',
-            description: post.openGraph?.description ||
-                post.metaDescription ||
-                'Read our latest blog post',
+            title: post.openGraph?.title || post.seoTitle || post.title,
+            description: post.openGraph?.description || post.metaDescription || post.excerpt,
             type: post.openGraph?.type || 'article',
-            images: ogImage ? [
+            publishedTime: post.publishedAt,
+            modifiedTime: post.updatedAt,
+            authors: [post.author?.name],
+            images: post.openGraph?.image ? [
                 {
-                    url: ogImage,
-                    width: 1200,
-                    height: 630,
-                    alt: post.openGraph?.image?.alt ||
-                        post.mainImage?.alt ||
-                        post.title ||
-                        'Blog post image'
+                    url: urlForImage(post.openGraph.image)?.url() || '',
+                    alt: post.openGraph.image.alt || '',
                 }
             ] : [],
         },
-    };
-    return metadata;
+        alternates: {
+            canonical: `https://yourdomain.com/blog/${post.slug.current}`,
+            languages: {
+                [post.language || 'en']: `/blog/${post.slug.current}`,
+            },
+        },
+    }
 }
 
 export default async function PostDefault(props: { params: Promise<{ slug: string }> }) {

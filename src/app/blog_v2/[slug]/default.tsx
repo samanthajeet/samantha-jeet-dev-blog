@@ -44,17 +44,23 @@ export default async function Post(props: Props) {
         }
     }
     const mainImageUrl = getImageUrl(post?.mainImage || null)
+    console.log(post.mainImage)
+    console.log(post.mainImage?.caption)
 
     return (
         <>
             <Container className="!pt-0">
                 <div className="mx-auto max-w-screen-md ">
-                    <div className="flex justify-center">
+                    <div className="flex justify-center mb-2">
                         <CategoryLabel categories={post.categories} />
                     </div>
 
-                    <h1 className="text-brand-primary mb-3 mt-2 text-center text-4xl font-semibold tracking-tight text-black lg:text-4xl lg:leading-snug font-permanent-marker">
-                        {post.title}
+                    <h1 className="text-5xl font-bold text-center mb-12 font-permanent-marker text-black inline-block relative">
+                        <span className="relative z-10">{post.title}</span>
+                        <span
+                            className="absolute -inset-x-4 inset-y-0 block bg-secondary/20 -skew-y-3 -z-10"
+                            aria-hidden="true"
+                        ></span>
                     </h1>
 
                     <div className="mt-3 flex justify-center space-x-3 text-dark ">
@@ -97,14 +103,21 @@ export default async function Post(props: Props) {
 
             <div className="relative z-0 mx-auto aspect-video max-w-screen-lg overflow-hidden lg:rounded-lg">
                 {imageProps && (
-                    <Image
-                        src={mainImageUrl || ''}
-                        alt={post.mainImage?.alt || "Thumbnail"}
-                        loading="eager"
-                        fill
-                        sizes="100vw"
-                        className="object-cover"
-                    />
+                    <div>
+                        <Image
+                            src={mainImageUrl || ''}
+                            alt={post.mainImage?.alt || "Thumbnail"}
+                            loading="eager"
+                            fill
+                            sizes="100vw"
+                            className="object-cover"
+                        />
+                        {post.mainImage?.caption && (
+                            <figcaption className="text-[10px] text-white italic absolute bottom-1 right-1 drop-shadow-sm">
+                                {post.mainImage?.caption}
+                            </figcaption>
+                        )}
+                    </div>
                 )}
             </div>
 

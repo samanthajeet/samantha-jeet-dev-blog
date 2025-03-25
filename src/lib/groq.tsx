@@ -2,7 +2,7 @@ import { groq } from "next-sanity"
 
 
 export const postquery = groq`
-*[_type == "post" && defined(publishedAt) && !(_id in path("drafts.**"))] | order(publishedAt desc) {
+*[_type == "post" && defined(publishedAt) && publishedAt <= now() && !(_id in path("drafts.**"))] | order(publishedAt desc) {
   _id,
   _createdAt,
   publishedAt,
@@ -60,6 +60,24 @@ export const allPostsQuery = groq`
 export const singlequery = groq`
 *[_type == "post" && slug.current == $slug][0] {
   ...,
+  title,
+  seoTitle,
+  metaDescription,
+  keywords,
+  isIndexed,
+  language,
+  publishedAt,
+  updatedAt,
+  openGraph {
+    title,
+    description,
+    type,
+    image {
+      ...,
+      "url": asset->url,
+      alt
+    }
+  },
   body[]{
     ...,
     markDefs[]{
@@ -71,15 +89,21 @@ export const singlequery = groq`
   },
   author->,
   categories[]->,
-  "estReadingTime": round(length(pt::text(body)) / 5 / 180 ),
+  "estReadingTime": coalesce(readingTime, round(length(pt::text(body)) / 5 / 180)),
   "related": *[_type == "post" && count(categories[@._ref in ^.^.categories[]._ref]) > 0 ] | order(publishedAt desc, _createdAt desc) [0...5] {
     title,
     slug,
     "date": coalesce(publishedAt,_createdAt),
     "image": mainImage
   },
-  comments[]->,
-  openGraph,
+  "comments": *[_type == "comment" && references(^._id)] | order(_createdAt desc) {
+    _id,
+    name,
+    email,
+    text,
+    "createdAt": _createdAt,
+    approved
+  },
 }
 `;
 
@@ -88,7 +112,7 @@ export const pathquery = groq`
 `;
 
 export const singlePostQuery = groq`
-  *[_type == "post" && slug.current == $slug][0] {
+  *[_type == "post" && slug.current == $slug && (publishedAt <= now()) && !(_id in path("drafts.**"))][0] {
     _id,
     title,
     mainImage {

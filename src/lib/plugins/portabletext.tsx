@@ -9,15 +9,23 @@ import { SanityImage } from '@/types'
 const ImageComponent = ({ value }: { value: SanityImage }) => {
   // const {width, height} = getImageDimensions(value)
   return (
-    <Image
-      src={urlForImage(value)?.url() || ''}
-      alt={value.alt || 'Image'}
-      loading="lazy"
-      className="object-cover"
-      sizes="(max-width: 800px) 100vw, 800px"
-      width={800}
-      height={800}
-    />
+    <div>
+      <Image
+        src={urlForImage(value)?.url() || ''}
+        alt={value.alt || 'Image'}
+        loading="lazy"
+        className="object-cover"
+        sizes="(max-width: 800px) 100vw, 800px"
+        width={800}
+        height={800}
+      />
+      {value.caption && (
+        <figcaption className="mt-2 text-center text-[10px] text-dark italic">
+          {value.caption}
+        </figcaption>
+
+      )}
+    </div>
   );
 };
 

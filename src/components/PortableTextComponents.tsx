@@ -23,7 +23,7 @@ export const portableTextComponents = {
             const imageUrl = getImageUrl(value)
             if (!imageUrl) return null
             return (
-                <div className="my-12">
+                <figure className="my-12">
                     <div className="relative w-full h-[400px]">
                         <Image
                             src={imageUrl}
@@ -32,7 +32,12 @@ export const portableTextComponents = {
                             className="object-cover rounded-lg"
                         />
                     </div>
-                </div>
+                    {value.caption && (
+                        <figcaption className="mt-2 text-center text-sm text-gray-600 italic">
+                            {value.caption}
+                        </figcaption>
+                    )}
+                </figure>
             )
         }
     },
