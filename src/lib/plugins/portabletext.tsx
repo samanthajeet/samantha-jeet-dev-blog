@@ -20,7 +20,7 @@ const ImageComponent = ({ value }: { value: SanityImage }) => {
         height={800}
       />
       {value.caption && (
-        <figcaption className="mt-2 text-center text-[10px] text-dark italic">
+        <figcaption className="mt-2 text-center text-[12px] text-dark italic">
           {value.caption}
         </figcaption>
 

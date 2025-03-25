@@ -6,9 +6,19 @@ const imageBuilder = createImageUrlBuilder({
     dataset: dataset || '',
 });
 
-export const urlForImage = (source: SanityImageSource) => {
-    if (!source) {
-        return undefined;
+export function urlForImage(source: SanityImageSource | string) {
+    if (typeof source === 'string' || !source) {
+        return null;
     }
-    return imageBuilder.image(source);
-}; 
+
+    if (!('asset' in source)) {
+        return null;
+    }
+
+    try {
+        return imageBuilder.image(source);
+    } catch (error) {
+        console.warn('Error building image URL:', error);
+        return null;
+    }
+} 

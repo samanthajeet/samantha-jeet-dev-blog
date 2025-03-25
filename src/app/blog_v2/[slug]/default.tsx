@@ -33,16 +33,16 @@ export default async function Post(props: Props) {
 
     const getImageUrl = (image: SanityImage | null): string | null => {
         try {
-            if (!image) {
-                return null
+            if (!image || !image.asset) {
+                return null;
             }
-            const imageUrl = urlForImage(image)?.url()
-            return imageUrl || null
+            const imageUrl = urlForImage(image)?.url();
+            return imageUrl || null;
         } catch (error) {
-            console.warn('Error resolving image URL:', error)
-            return null
+            console.warn('Error resolving image URL:', error);
+            return null;
         }
-    }
+    };
     const mainImageUrl = getImageUrl(post?.mainImage || null)
     console.log(post.mainImage)
     console.log(post.mainImage?.caption)
@@ -102,10 +102,10 @@ export default async function Post(props: Props) {
             </Container>
 
             <div className="relative z-0 mx-auto aspect-video max-w-screen-lg overflow-hidden lg:rounded-lg">
-                {imageProps && (
+                {imageProps && mainImageUrl && (
                     <div>
                         <Image
-                            src={mainImageUrl || ''}
+                            src={mainImageUrl}
                             alt={post.mainImage?.alt || "Thumbnail"}
                             loading="eager"
                             fill
