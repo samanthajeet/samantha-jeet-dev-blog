@@ -169,6 +169,58 @@ const post = {
                 }
             ]
         },
+        {
+            name: 'twitter',
+            title: 'Twitter Card',
+            type: 'object',
+            group: 'seo',
+            description: 'Settings for Twitter card appearance',
+            fields: [
+                {
+                    name: 'card',
+                    title: 'Card Type',
+                    type: 'string',
+                    options: {
+                        list: [
+                            { title: 'Summary Large Image', value: 'summary_large_image' },
+                            { title: 'Summary', value: 'summary' },
+                        ],
+                    },
+                    initialValue: 'summary_large_image',
+                },
+                {
+                    name: 'title',
+                    title: 'Twitter Title',
+                    type: 'string',
+                    description: 'Defaults to SEO title if left empty',
+                    validation: (rule: Rule) => rule.max(70),
+                },
+                {
+                    name: 'description',
+                    title: 'Twitter Description',
+                    type: 'text',
+                    description: 'Defaults to meta description if left empty',
+                    validation: (rule: Rule) => rule.max(200),
+                },
+                {
+                    name: 'image',
+                    title: 'Twitter Image',
+                    type: 'image',
+                    description: 'Ideal size: 1200x628px. Falls back to OG image if not set.',
+                    options: {
+                        hotspot: true,
+                    },
+                    fields: [
+                        {
+                            name: 'alt',
+                            type: 'string',
+                            title: 'Alternative text',
+                            validation: (rule: Rule) => rule.required(),
+                        }
+                    ]
+                }
+            ]
+        },
         // Metadata Group
         {
             name: 'language',

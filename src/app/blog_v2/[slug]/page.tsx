@@ -11,6 +11,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const resolvedParams = await params;
     const post = await getPostBySlug(resolvedParams.slug);
 
+    const mainImageUrl = post.mainImage ? urlForImage(post.mainImage)?.url() : null;
+
     return {
         title: post.seoTitle || post.title,
         description: post.metaDescription || post.excerpt,
@@ -23,12 +25,26 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             publishedTime: post.publishedAt,
             modifiedTime: post.updatedAt,
             authors: [post.author?.name],
-            images: post.openGraph?.image ? [
+            images: [
                 {
-                    url: urlForImage(post.openGraph.image)?.url() || '',
-                    alt: post.openGraph.image.alt || '',
+                    url: post.openGraph?.image
+                        ? urlForImage(post.openGraph.image)?.url() || ''
+                        : mainImageUrl || '',
+                    alt: post.openGraph?.image?.alt || post.mainImage?.alt || post.title,
+                    width: 1200,
+                    height: 630,
                 }
-            ] : [],
+            ],
+            siteName: 'Your Site Name',
+            url: `https://yourdomain.com/blog/${post.slug.current}`,
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: post.openGraph?.title || post.seoTitle || post.title,
+            description: post.openGraph?.description || post.metaDescription || post.excerpt,
+            images: [post.openGraph?.image
+                ? urlForImage(post.openGraph.image)?.url() || ''
+                : mainImageUrl || ''],
         },
         alternates: {
             canonical: `https://yourdomain.com/blog/${post.slug.current}`,
