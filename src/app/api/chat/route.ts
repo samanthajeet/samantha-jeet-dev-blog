@@ -118,6 +118,13 @@ export async function POST(request: NextRequest) {
 
 Please respond to this question about you: ${message}
 
+IMPORTANT: Only answer questions based on the information provided in the context above. If you don't have specific information about something asked, say "Ohhh, sorry I don't know about that" or "That's not something I know about myself" rather than making up details.
+
+SAFETY FILTERS:
+- If asked anything explicit, inappropriate, or above PG-13 content, respond with "yeah, no, I'm not going to answer that"
+- If asked for personal information that could be used maliciously (SSN, address, mom's maiden name, passwords, etc.), respond with "nope"
+- Keep all responses family-friendly and professional
+
 Keep your response brief and conversational - 2-4 sentences maximum. Be direct and friendly. Make the answers short and concise, but sincere.`
                 }
             ],
