@@ -10,6 +10,7 @@ import AuthorCard from "@/components/AuthorCard";
 import type { SanityImage, Post } from "@/types";
 import CommentForm from "@/components/CommentForm";
 import Comments from '@/components/Comments'
+import Sidebar from "@/components/blog/Sidebar";
 
 interface Props {
     post: Post
@@ -44,8 +45,6 @@ export default async function Post(props: Props) {
         }
     };
     const mainImageUrl = getImageUrl(post?.mainImage || null)
-    console.log(post.mainImage)
-    console.log(post.mainImage?.caption)
 
     return (
         <>
@@ -101,7 +100,7 @@ export default async function Post(props: Props) {
                 </div>
             </Container>
 
-            <div className="relative z-0 mx-auto aspect-video max-w-screen-lg overflow-hidden lg:rounded-lg">
+            <div className="relative z-0 mx-auto aspect-video max-w-screen-lg overflow-hidden lg:rounded-lg mb-8">
                 {imageProps && mainImageUrl && (
                     <div>
                         <Image
@@ -122,20 +121,27 @@ export default async function Post(props: Props) {
             </div>
 
             <Container>
-                <article className="mx-auto max-w-screen-md ">
-                    <div className="mx-auto my-3 a:text-tertiary text-dark">
-                        {post.body && <PortableText value={post.body} />}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div className="lg:col-span-8">
+                        <article className="mx-auto">
+                            <div className="mx-auto my-3 a:text-tertiary text-dark">
+                                {post.body && <PortableText value={post.body} />}
+                            </div>
+                            <div className="mb-7 mt-7 flex justify-center">
+                                <Link
+                                    href="/blog_v2/"
+                                    className="bg-brand-secondary/20 rounded-full px-5 py-2 text-sm text-blue-600 dark:text-blue-500">
+                                    ← View all posts
+                                </Link>
+                            </div>
+                            {post.author && <AuthorCard name={post.author.name} image={post.author.image || undefined} bio={post.author.bio} />}
+                        </article>
                     </div>
-                    <div className="mb-7 mt-7 flex justify-center">
-                        <Link
-                            href="/blog_v2/"
-                            className="bg-brand-secondary/20 rounded-full px-5 py-2 text-sm text-blue-600 dark:text-blue-500 ">
-                            ← View all posts
-                        </Link>
-                    </div>
-                    {post.author && <AuthorCard name={post.author.name} image={post.author.image || undefined} bio={post.author.bio} />}
-                </article>
+
+                    <Sidebar post={post} />
+                </div>
             </Container>
+
             <Container>
                 {post.comments && post.comments.length > 0 ? (
                     <Comments comments={post.comments} />

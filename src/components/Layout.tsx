@@ -34,6 +34,12 @@ export default function Layout({ children }: LayoutProps) {
                             >
                                 about
                             </Link>
+                            <Link
+                                href="/apps"
+                                className="inline-flex items-center px-1 pt-1 text-tertiary font-sans hover:text-secondary "
+                            >
+                                apps
+                            </Link>
 
                         </div>
                     </div>

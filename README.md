@@ -7,6 +7,7 @@ A modern personal website built with Next.js, TypeScript, Tailwind CSS, and Sani
 - Modern, responsive design with Tailwind CSS
 - Blog functionality with Sanity.io CMS
 - Portfolio section
+- **Ask Sam Chat Feature** - AI-powered chat interface using Anthropic Claude
 - SEO optimized
 - TypeScript for better development experience
 - Fast page loads with Next.js 14
@@ -26,8 +27,9 @@ A modern personal website built with Next.js, TypeScript, Tailwind CSS, and Sani
    - Update the `.env.local` file with your Sanity project ID
 
 4. Configure environment variables:
-   - Copy `.env.local` to `.env.local`
-   - Update the `NEXT_PUBLIC_SANITY_PROJECT_ID` with your Sanity project ID
+   - Create a `.env.local` file in the root directory
+   - Add your Sanity project ID: `NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id`
+   - Add your Anthropic API key for the Ask Sam feature: `ANTHROPIC_API_KEY=your_anthropic_api_key`
 
 5. Run the development server:
    ```bash
@@ -44,6 +46,23 @@ The Sanity Studio is included in this project. To access it:
 2. Navigate to [http://localhost:3000/studio](http://localhost:3000/studio)
 3. Log in with your Sanity account
 4. Start creating content!
+
+## Ask Sam Chat Feature
+
+The Ask Sam feature allows visitors to chat with an AI version of Samantha Jeet. The AI is trained on her background, career, and personal information to provide authentic responses in her voice.
+
+### Setup
+
+1. Get an Anthropic API key from [console.anthropic.com](https://console.anthropic.com/)
+2. Add the API key to your `.env.local` file: `ANTHROPIC_API_KEY=your_key_here`
+3. Access the chat at [http://localhost:3000/apps/askSam](http://localhost:3000/apps/askSam)
+
+### Features
+
+- Real-time chat interface
+- AI responses in Samantha's voice and personality
+- Knowledge about career, background, and personal interests
+- Beautiful, responsive UI
 
 ## Deployment
 

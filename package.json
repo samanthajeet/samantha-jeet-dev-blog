@@ -12,6 +12,7 @@
     "lint:strict": "eslint . --max-warnings=0"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.56.0",
     "@heroicons/react": "^2.2.0",
     "@portabletext/react": "^3.2.1",
     "@sanity/client": "^6.28.1",
