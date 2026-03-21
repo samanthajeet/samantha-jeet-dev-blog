@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { accentHighlightClass } from '@/lib/accentHighlight';
+import { BLOG_INDEX_PATH } from '@/lib/routes';
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -15,7 +17,7 @@ export default function Layout({ children }: LayoutProps) {
                                 <h1 className="text-2xl font-permanent-marker text-dark inline-block relative">
                                     <span className="relative z-10">SAM JEET</span>
                                     <span
-                                        className={`absolute -inset-x-4 inset-y-0 block ${['bg-primary/20', 'bg-secondary/20', 'bg-tertiary/20', 'bg-retroBlue/20'][Math.floor(Math.random() * 4)]} -skew-y-3 -z-10`}
+                                        className={`absolute -inset-x-4 inset-y-0 block ${accentHighlightClass('layout-nav')} -skew-y-3 -z-10`}
                                         aria-hidden="true"
                                     ></span>
                                 </h1>
@@ -23,7 +25,7 @@ export default function Layout({ children }: LayoutProps) {
                         </div>
                         <div className="flex space-x-8">
                             <Link
-                                href="/blog_v2"
+                                href={BLOG_INDEX_PATH}
                                 className="inline-flex items-center px-1 pt-1 text-tertiary font-sans hover:text-secondary "
                             >
                                 blog

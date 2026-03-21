@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { accentHighlightClass } from '@/lib/accentHighlight';
+import { BLOG_INDEX_PATH } from '@/lib/routes';
 
 export default function Home() {
   return (
@@ -8,8 +10,7 @@ export default function Home() {
           <h1 className="text-4xl font-bold text-center text-dark inline-block relative">
             <span className="relative z-10">✌🏽aloha, I&apos;m <span className="font-permanent-marker text-5xl">sam jeet</span> <span className="text-sm font-normal">she/her</span></span>
             <span
-              className={`absolute -inset-x-8 inset-y-0 block skew-y-1 -z-10 ${['bg-primary/20', 'bg-secondary/20', 'bg-tertiary/20', 'bg-retroBlue/20'][Math.floor(Math.random() * 4)]
-                }`}
+              className={`absolute -inset-x-8 inset-y-0 block skew-y-1 -z-10 ${accentHighlightClass('home-hero')}`}
               aria-hidden="true"
             ></span>
           </h1>
@@ -35,7 +36,7 @@ export default function Home() {
           </div>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <Link
-              href="/blog"
+              href={BLOG_INDEX_PATH}
               className="rounded-md bg-primary text-dark px-4 py-2"
             >
               Read My Blog

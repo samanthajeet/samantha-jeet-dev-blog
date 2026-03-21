@@ -4,6 +4,7 @@ const postSchema = defineType({
     name: 'post_v2',
     title: 'Post_v2',
     type: 'document',
+    groups: [{ name: 'content', title: 'Content' }],
     initialValue: () => ({
         publishedAt: new Date().toISOString()
     }),

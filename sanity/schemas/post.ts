@@ -1,5 +1,5 @@
 import { Rule } from '@sanity/types';
-import { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import type { SanityImageSource } from '@sanity/image-url';
 
 const post = {
     name: 'post',

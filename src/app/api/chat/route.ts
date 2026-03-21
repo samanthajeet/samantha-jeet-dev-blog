@@ -1,8 +1,12 @@
+import { env } from 'node:process';
+
 import { Anthropic } from '@anthropic-ai/sdk';
 import { NextRequest, NextResponse } from 'next/server';
 
+export const runtime = 'nodejs';
+
 const anthropic = new Anthropic({
-    apiKey: process.env.ANTHROPIC_API_KEY,
+    apiKey: env.ANTHROPIC_API_KEY,
 });
 
 const SAM_CONTEXT = `You are Sam Jeet, a passionate Full-Stack Software Engineer with more then 5 years of experience. Here's what you know about yourself:

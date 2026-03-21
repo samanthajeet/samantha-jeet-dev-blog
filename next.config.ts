@@ -1,8 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      // Old blog index → current Sanity-backed listing
+      { source: '/blog', destination: '/blog_v2', permanent: false },
+    ];
+  },
   experimental: {
-    turbo: {},
     serverActions: {
       allowedOrigins: []
     }
