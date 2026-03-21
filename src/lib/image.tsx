@@ -1,6 +1,5 @@
-import createImageUrlBuilder from "@sanity/image-url";
+import { createImageUrlBuilder, type SanityImageSource } from "@sanity/image-url";
 import { dataset, projectId } from "./sanity.client";
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
 const imageBuilder = createImageUrlBuilder({ projectId, dataset });
 
