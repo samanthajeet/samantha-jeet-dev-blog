@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useSyncExternalStore } from 'react'
 
 interface CommentFormProps {
     postId: string
@@ -13,14 +13,11 @@ const initialFormState = {
 }
 
 export default function CommentForm({ postId }: CommentFormProps) {
-    const [mounted, setMounted] = useState(false)
+    // false during SSR and hydration, true once running in the browser
+    const mounted = useSyncExternalStore(() => () => {}, () => true, () => false)
     const [formData, setFormData] = useState(initialFormState)
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
     const [error, setError] = useState<string | null>(null)
-
-    useEffect(() => {
-        setMounted(true)
-    }, [])
 
     if (!mounted) {
         return null // or a loading placeholder

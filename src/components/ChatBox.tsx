@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useSyncExternalStore } from 'react';
 
 // Retro pixel avatar SVGs
 const SamAvatar = () => (
@@ -31,6 +31,8 @@ interface Message {
 
 const MESSAGE_LIMIT = 10; // Set your desired limit
 
+const getSentCount = () => Number(localStorage.getItem('askSamMessageCount') || '0');
+
 export default function ChatBox() {
     const [messages, setMessages] = useState<Message[]>([
         {
@@ -43,7 +45,12 @@ export default function ChatBox() {
     const [inputMessage, setInputMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
-    const [limitReached, setLimitReached] = useState(false);
+    // Re-read from localStorage on every render; false on the server
+    const limitReached = useSyncExternalStore(
+        () => () => {},
+        () => getSentCount() >= MESSAGE_LIMIT,
+        () => false
+    );
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -51,18 +58,12 @@ export default function ChatBox() {
 
     useEffect(() => {
         scrollToBottom();
-        // On mount, check if the user already hit the limit
-        const sentCount = Number(localStorage.getItem('askSamMessageCount') || '0');
-        if (sentCount >= MESSAGE_LIMIT) {
-            setLimitReached(true);
-        }
     }, [messages]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const sentCount = Number(localStorage.getItem('askSamMessageCount') || '0');
+        const sentCount = getSentCount();
         if (sentCount >= MESSAGE_LIMIT) {
-            setLimitReached(true);
             setMessages(prev => [
                 ...prev,
                 {
